@@ -63,6 +63,9 @@
        
               <lib dir="./lib" />
     -->
+  
+  <!-- To find ICU4J and possibly other jars -->
+  <lib dir="../lib" />
 
   <!-- A dir option by itself adds any files found in the directory to
        the classpath, this is useful for including all jars in a
