@@ -599,7 +599,13 @@
   <!-- field for the QueryParser to use when an explicit fieldname is absent -->
   <defaultSearchField>content</defaultSearchField>
 
-  <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
-  <solrQueryParser defaultOperator="AND"/>
+  <!-- See https://www.drupal.org/node/2486533 -->
+  <!-- DEPRECATED: The defaultOperator (AND|OR) is consulted by various query
+    parsers when parsing a query string to determine if a clause of the query
+    should be marked as required or optional, assuming the clause isn't already
+    marked by some operator. The default is OR, which is generally assumed so it
+    is not a good idea to change it globally here. The "q.op" request parameter
+    takes precedence over this.
+  <solrQueryParser defaultOperator="OR"/> -->
 
 </schema>

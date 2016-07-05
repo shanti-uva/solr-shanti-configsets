@@ -842,6 +842,7 @@
     <lst name="defaults">
       <str name="defType">edismax</str>
       <str name="echoParams">explicit</str>
+      <str name="q.op">AND</str>
       <bool name="omitHeader">true</bool>
       <float name="tie">0.01</float>
       <!-- Don't abort searches for the pinkPony request handler (set in solrcore.properties) -->
@@ -866,6 +867,7 @@
      when performing moreLikeThis requests.-->
   <requestHandler name="mlt" class="solr.MoreLikeThisHandler">
     <lst name="defaults">
+      <str name="q.op">AND</str>
       <str name="mlt.mintf">1</str>
       <str name="mlt.mindf">1</str>
       <str name="mlt.minwl">3</str>
@@ -882,6 +884,7 @@
      <lst name="defaults">
        <str name="echoParams">explicit</str>
        <bool name="omitHeader">true</bool>
+       <str name="q.op">AND</str>
      </lst>
   </requestHandler>
 
@@ -1087,6 +1090,7 @@
       <str name="omitHeader">true</str>
       <str name="wt">json</str>
       <str name="indent">true</str>
+      <str name="q.op">AND</str>
     </lst>
   </requestHandler>
 
