@@ -128,7 +128,7 @@ To delete the collection and stop Solr, do:
 
 ```
 bin/solr delete -c av
-bin/solr stop -p 8983
+bin/solr stop -all
 ```
 
 If you want to stop ZooKeeper, do the following from its bin directory:
@@ -137,13 +137,13 @@ If you want to stop ZooKeeper, do the following from its bin directory:
 ./zkServer.sh stop
 ```
 
-Sometimes you may want to delete a collection without deleting its config. For example:
+You might want to delete a collection without deleting its config:
 
 ```
 bin/solr delete -c gettingstarted -deleteConfig false
 ```
 
-Alternatively, you may want to remove a config that doesn't have a collection:
+You might want to remove a config that doesn't have a collection:
 
 ```
 ./server/scripts/cloud-scripts/zkcli.sh -cmd clear -z "localhost:2181" /configs/av
