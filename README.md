@@ -138,26 +138,24 @@ You'll then pick up where you left off.
 
 ### SolrCloud with MeasuredSearch.com
 
-Start by cloning the (SearchStax Client)[https://github.com/measuredsearch/searchstax-client].
-Run scripts from the `solr-5/scripts` directory. To upload a config to Measured Search, or to
-replace an existing config, do:
+Start by cloning the [SearchStax Client](https://github.com/measuredsearch/searchstax-client).
+To upload a config or to replace an existing config, navigate to the solr-5/scripts directory
+and then do:
 
 ```
 ./zkcli.sh -zkhost ZKE -cmd upconfig -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7/conf -confname drupal7
 ```
 
-Where "ZKE" is the ZooKeeper Ensemble that manages the configs for your Solr deployment. You'll
-find this on your Measured Search server page.
-
-To create a collection from this config, use curl and the Solr Collections API:
+Where ZKE is the address of your ZooKeeper Ensemble, which you'll find on your Measured Search
+server page. To create a collection from this config, use curl and the Solr Collections API:
 
 ```
 curl 'SLB/admin/collections?action=CREATE&name=av_dev&collection.configName=drupal7'
 ```
 
-Where "SLB" is the address of your Solr Load Balancer, which you'll find on your Measured Search
-server page. This command creates one shard. To create three shards, add `numShards=3`. (In that
-case, if you are experimenting on a single node then you'll also need to add `maxShardsPerNode=3`.)
+Where SLB is the address of your Solr Load Balancer. This command only creates one shard. 
+To create more shards, add for example, `numShards=3`. (In which case, if you are experimenting
+on a single node then you'll also need to add `maxShardsPerNode=3`.)
 
 To delete a collection, do:
 
@@ -170,6 +168,4 @@ To delete a config that has no collections, do:
 ```
 ./zkcli.sh -zkhost ZKE -cmd clear /configs/av
 ```
-
-
 
