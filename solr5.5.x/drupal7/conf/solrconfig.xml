@@ -64,13 +64,12 @@
               <lib dir="./lib" />
     -->
   
-  <!-- To find ICU4J and possibly other jars -->
-  <lib dir="../lib" />
-
   <!-- A dir option by itself adds any files found in the directory to
        the classpath, this is useful for including all jars in a
        directory.
     -->
+  <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lib" />
+  <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lucene-libs" />
   <lib dir="${solr.contrib.dir:../../../contrib}/extraction/lib" />
   <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
 
