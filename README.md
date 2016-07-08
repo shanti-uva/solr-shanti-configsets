@@ -150,7 +150,7 @@ Where ZKE is the address of your ZooKeeper Ensemble, which you'll find on your M
 server page. To create a collection from this config, use curl and the Solr Collections API:
 
 ```
-curl 'SLB/admin/collections?action=CREATE&name=av_dev&collection.configName=drupal7'
+curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7'
 ```
 
 Where SLB is the address of your Solr Load Balancer. This command only creates one shard. 
@@ -160,12 +160,12 @@ on a single node then you'll also need to add `maxShardsPerNode=3`.)
 To delete a collection, do:
 
 ```
-curl 'SLB/admin/collections?action=DELETE&name=av_dev'
+curl 'SLB/admin/collections?action=DELETE&name=av'
 ```
 
 To delete a config that has no collections, do:
 
 ```
-./zkcli.sh -zkhost ZKE -cmd clear /configs/av
+./zkcli.sh -zkhost ZKE -cmd clear /configs/drupal7
 ```
 
