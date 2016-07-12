@@ -12,7 +12,7 @@ following commands:
 
 ```
 bin/solr start
-bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7
+bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo
 ```
 
 This creates a new core called 'av' in the server/solr directory, which copies the drupal7
@@ -39,7 +39,7 @@ will not be loaded.
 
 ```
 bin/solr start -c -Dsolr.contrib.dir=/path/to/solr/contrib
-bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7
+bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo
 ```
 
 This will create a single shard single replica SolrCloud collection called 'av'. To see this,
@@ -87,7 +87,7 @@ you point your browser to http://localhost:8983/solr/#/~cloud?view=tree.
 Next, upload the drupal7 configuration to ZooKeeper. We'll call it "av":
 
 ```
-./server/scripts/cloud-scripts/zkcli.sh -zkhost localhost:2181 -cmd upconfig -confname av -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7/conf
+./server/scripts/cloud-scripts/zkcli.sh -zkhost localhost:2181 -cmd upconfig -confname av -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo/conf
 ```
 
 This is also the command that you can use to replace the av config in ZooKeeper if you change it locally.
@@ -136,6 +136,15 @@ bin/solr start -c -s example/cloud/node2/solr -p 7574 -z localhost:2181
 
 You'll then pick up where you left off.
 
+### SolrCloud with a ZooKeeper Ensemble
+
+The above example involves a single instance of ZooKeeper controlling all nodes. In production you
+would rather that ZooKeeper is running on each node, with a minimum of three nodes. If one node
+goes down, then the other two are still a quorum and so can keep running. Here's a nice write-up 
+on how to set up a ZooKeeper Ensemble:
+
+[Setting Up SolrCloud in Solr 5.x](http://simplyitinc.blogspot.com/2015/06/setting-up-solrcloud-in-solr-5x.html)
+
 ### SolrCloud with MeasuredSearch.com
 
 Start by cloning the [SearchStax Client](https://github.com/measuredsearch/searchstax-client).
@@ -143,14 +152,14 @@ To upload a config or to replace an existing config, navigate to the solr-5/scri
 and then do:
 
 ```
-./zkcli.sh -zkhost ZKE -cmd upconfig -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7/conf -confname drupal7
+./zkcli.sh -zkhost ZKE -cmd upconfig -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo/conf -confname drupal7_audiovideo
 ```
 
 Where ZKE is the address of your ZooKeeper Ensemble, which you'll find on your Measured Search
 server page. To create a collection from this config, use curl and the Solr Collections API:
 
 ```
-curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7&numShards=1'
+curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7_audiovideo&numShards=1'
 ```
 
 Where SLB is the address of your Solr Load Balancer. This command only creates one shard. 
@@ -166,6 +175,6 @@ curl 'SLB/admin/collections?action=DELETE&name=av'
 To delete a config that has no collections, do:
 
 ```
-./zkcli.sh -zkhost ZKE -cmd clear /configs/drupal7
+./zkcli.sh -zkhost ZKE -cmd clear /configs/drupal7_audiovideo
 ```
 
