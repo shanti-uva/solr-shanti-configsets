@@ -136,6 +136,15 @@ bin/solr start -c -s example/cloud/node2/solr -p 7574 -z localhost:2181
 
 You'll then pick up where you left off.
 
+### SolrCloud with a ZooKeeper Ensemble
+
+The above example involves a single instance of ZooKeeper controlling all nodes. In production you
+would rather that ZooKeeper is running on each node, with a minimum of three nodes. If one node
+goes down, then the other two ZooKeeper instances are still a quorum and so can keep running.
+Here's a nice write-up on how to set up a ZooKeeper Ensemble:
+
+[Setting Up SolrCloud in Solr 5.x](http://simplyitinc.blogspot.com/2015/06/setting-up-solrcloud-in-solr-5x.html)
+
 ### SolrCloud with MeasuredSearch.com
 
 Start by cloning the [SearchStax Client](https://github.com/measuredsearch/searchstax-client).
