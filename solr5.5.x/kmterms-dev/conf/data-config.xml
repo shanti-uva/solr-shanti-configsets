@@ -1,0 +1,5 @@
+<dataConfig>
+  <document>
+    <entity name="sep" processor="SolrEntityProcessor" url="http://localhost/solr/termindex-test" query="*:*" fl="*,_old_version_:_version_" />
+  </document>
+</dataConfig>
