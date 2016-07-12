@@ -150,7 +150,7 @@ Where ZKE is the address of your ZooKeeper Ensemble, which you'll find on your M
 server page. To create a collection from this config, use curl and the Solr Collections API:
 
 ```
-curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7&numShards=1'
+curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7_audiovideo&numShards=1'
 ```
 
 Where SLB is the address of your Solr Load Balancer. This command only creates one shard. 
