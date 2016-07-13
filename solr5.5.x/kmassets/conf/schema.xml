@@ -260,11 +260,12 @@
 
       NOTE: These field types are deprecated will be removed in Solr 5.0!
     -->
-    <fieldType name="pint" class="solr.IntField"/>
+    <!-- <fieldType name="pint" class="solr.IntField"/>
     <fieldType name="plong" class="solr.LongField"/>
     <fieldType name="pfloat" class="solr.FloatField"/>
     <fieldType name="pdouble" class="solr.DoubleField"/>
     <fieldType name="pdate" class="solr.DateField" sortMissingLast="true"/>
+    -->
 
     <!-- The "RandomSortField" is not used to store or search any
          data.  You can declare fields of this type it in your schema
