@@ -12,7 +12,7 @@ following commands:
 
 ```
 bin/solr start
-bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo
+bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr
 ```
 
 This creates a new core called 'av' in the server/solr directory, which copies the drupal7
@@ -39,7 +39,7 @@ will not be loaded.
 
 ```
 bin/solr start -c -Dsolr.contrib.dir=/path/to/solr/contrib
-bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo
+bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr
 ```
 
 This will create a single shard single replica SolrCloud collection called 'av'. To see this,
@@ -87,7 +87,7 @@ you point your browser to http://localhost:8983/solr/#/~cloud?view=tree.
 Next, upload the drupal7 configuration to ZooKeeper. We'll call it "av":
 
 ```
-./server/scripts/cloud-scripts/zkcli.sh -zkhost localhost:2181 -cmd upconfig -confname av -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo/conf
+./server/scripts/cloud-scripts/zkcli.sh -zkhost localhost:2181 -cmd upconfig -confname av -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr/conf
 ```
 
 This is also the command that you can use to replace the av config in ZooKeeper if you change it locally.
@@ -152,14 +152,14 @@ To upload a config or to replace an existing config, navigate to the solr-5/scri
 and then do:
 
 ```
-./zkcli.sh -zkhost ZKE -cmd upconfig -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_audiovideo/conf -confname drupal7_audiovideo
+./zkcli.sh -zkhost ZKE -cmd upconfig -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr/conf -confname drupal7_apachesolr
 ```
 
 Where ZKE is the address of your ZooKeeper Ensemble, which you'll find on your Measured Search
 server page. To create a collection from this config, use curl and the Solr Collections API:
 
 ```
-curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7_audiovideo&numShards=1'
+curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7_apachesolr&numShards=1'
 ```
 
 Where SLB is the address of your Solr Load Balancer. This command only creates one shard. 
@@ -175,6 +175,6 @@ curl 'SLB/admin/collections?action=DELETE&name=av'
 To delete a config that has no collections, do:
 
 ```
-./zkcli.sh -zkhost ZKE -cmd clear /configs/drupal7_audiovideo
+./zkcli.sh -zkhost ZKE -cmd clear /configs/drupal7_apachesolr
 ```
 
