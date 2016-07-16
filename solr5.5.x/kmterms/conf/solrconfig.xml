@@ -1622,7 +1622,7 @@
     
     <!-- get ancestor ids as path -->
     <processor class='solr.IgnoreFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_id_path</str>
+      <str name='fieldName'>ancestor_id_path</str>
     </processor>
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_default</str>
