@@ -37,53 +37,59 @@
   -->
   <luceneMatchVersion>4.9</luceneMatchVersion>
 
-  <!-- <lib/> directives can be used to instruct Solr to load an Jars
-       identified and use them to resolve any "plugins" specified in
-       your solrconfig.xml or schema.xml (ie: Analyzers, Request
-       Handlers, etc...).
+  <!-- OLD   
+  <lib dir="../../../contrib/extraction/lib" regex=".*\.jar" />
+  <lib dir="../../../dist/" regex="solr-cell-\d.*\.jar" />
 
-       All directories and paths are resolved relative to the
-       instanceDir.
+  <lib dir="../../../contrib/clustering/lib/" regex=".*\.jar" />
+  <lib dir="../../../dist/" regex="solr-clustering-\d.*\.jar" />
 
-       Please note that <lib/> directives are processed in the order
-       that they appear in your solrconfig.xml file, and are "stacked" 
-       on top of each other when building a ClassLoader - so if you have 
-       plugin jars with dependencies on other jars, the "lower level" 
-       dependency jars should be loaded first.
+  <lib dir="../../../contrib/langid/lib/" regex=".*\.jar" />
+  <lib dir="../../../dist/" regex="solr-langid-\d.*\.jar" />
 
-       If a "./lib" directory exists in your instanceDir, all files
-       found in it are included as if you had used the following
-       syntax...
-       
-              <lib dir="./lib" />
-    -->
+  <lib dir="../../../contrib/velocity/lib" regex=".*\.jar" />
+  <lib dir="../../../dist/" regex="solr-velocity-\d.*\.jar" />
+  -->
 
-  <!-- A 'dir' option by itself adds any files found in the directory 
-       to the classpath, this is useful for including all jars in a
-       directory.
+  <!-- A dir option by itself adds any files found in the directory to
+              the classpath, this is useful for including all jars in a
+                     directory.
+                         -->
+  <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lib" />
+    <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lucene-libs" />
+      <lib dir="${solr.contrib.dir:../../../contrib}/extraction/lib" />
+        <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
 
-       When a 'regex' is specified in addition to a 'dir', only the
-       files in that directory which completely match the regex
-       (anchored on both ends) will be included.
+  <!-- The velocity library has been known to crash Solr in some
+              instances when deployed as a war file to Tomcat. Therefore all
+                     references have been removed from the default configuration.
+                            @see http://drupal.org/node/1612556
+                              -->
+  <!-- <lib dir="../../contrib/velocity/lib" /> -->
 
-       If a 'dir' option (with or without a regex) is used and nothing
-       is found that matches, a warning will be logged.
+  <!-- When a regex is specified in addition to a directory, only the
+              files in that directory which completely match the regex
+                     (anchored on both ends) will be included.
+                         -->
+  <!--<lib dir="../../dist/" regex="apache-solr-cell-\d.*\.jar" />-->
+  <!--<lib dir="../../dist/" regex="apache-solr-clustering-\d.*\.jar" />-->
+	<lib dir="${solr.install.dir:../../../..}/contrib/dataimporthandler/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
+  <!--<lib dir="../../dist/" regex="apache-solr-langid-\d.*\.jar" />-->
+  <!-- <lib dir="../../dist/" regex="apache-solr-velocity-\d.*\.jar" /> -->
 
-       The examples below can be used to load some solr-contribs along 
-       with their external dependencies.
-    -->
-  <lib dir="../../../../contrib/extraction/lib" regex=".*\.jar" />
-  <lib dir="../../../../dist/" regex="solr-cell-\d.*\.jar" />
+  <!-- If a dir option (with or without a regex) is used and nothing
+              is found that matches, it will be ignored
+                  -->
+  <!--<lib dir="../../contrib/clustering/lib/" />-->
+  <!--<lib dir="/total/crap/dir/ignored" />-->
 
-  <lib dir="../../../../contrib/clustering/lib/" regex=".*\.jar" />
-  <lib dir="../../../../dist/" regex="solr-clustering-\d.*\.jar" />
-
-  <lib dir="../../../../contrib/langid/lib/" regex=".*\.jar" />
-  <lib dir="../../../../dist/" regex="solr-langid-\d.*\.jar" />
-
-  <lib dir="../../../../contrib/velocity/lib" regex=".*\.jar" />
-  <lib dir="../../../../dist/" regex="solr-velocity-\d.*\.jar" />
-
+  <!-- an exact path can be used to specify a specific file.  This
+              will cause a serious error to be logged if it can't be loaded.
+                  -->
+  <!--
+         <lib path="../a-jar-that-does-not-exist.jar" /> 
+           -->
   <!-- an exact 'path' can be used instead of a 'dir' to specify a 
        specific jar file.  This will cause a serious error to be logged 
        if it can't be loaded.
@@ -147,11 +153,13 @@
        modification REST API calls will be allowed; otherwise, error responses will be
        sent back for these requests. 
   -->
-  <schemaFactory class="ManagedIndexSchemaFactory">
+    <schemaFactory class="ManagedIndexSchemaFactory">
     <bool name="mutable">true</bool>
     <str name="managedSchemaResourceName">managed-schema</str>
   </schemaFactory>
-
+<!--
+       <schemaFactory class="ClassicIndexSchemaFactory"/>
+  -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
        Index Config - These settings control low-level behavior of indexing
        Most example settings here show the default value, but are commented
@@ -1541,8 +1549,7 @@
 
   <!-- Update Processors
 
-       Chains of Update Processor Factories for dealing with Update
-       Requests can be declared, and then used by name in Update
+       Chains of Update Processor Factories for dealing with Update Requests can be declared, and then used by name in Update
        Request Processors
 
        http://wiki.apache.org/solr/UpdateRequestProcessor
@@ -1563,6 +1570,10 @@
        See http://wiki.apache.org/solr/GuessingFieldTypes
     -->
   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
+    <!-- Ignore updates to generated field resulting from "copyField" -->
+    <processor class="solr.IgnoreFieldUpdateProcessorFactory">
+        <str name="fieldRegex">uid|ancestors|name|name_autocomplete|text|name_zh</str>
+    </processor>
     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseLongFieldUpdateProcessorFactory"/>
@@ -1606,6 +1617,52 @@
       <lst name="typeMapping">
         <str name="valueClass">java.lang.Number</str>
         <str name="fieldType">tdoubles</str>
+      </lst>
+    </processor>
+    
+    <!-- get ancestor ids as path -->
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestor_ids_default</str>
+      <str name='dest'>ancestor_id_path</str>
+    </processor>
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestor_ids_pol.admin.hier</str>
+      <str name='dest'>ancestor_id_path</str>
+    </processor>
+    <processor class='solr.ConcatFieldUpdateProcessorFactory'>
+      <str name='fieldName'>ancestor_id_path</str>
+      <str name='delimiter'>/</str>
+    </processor>
+
+    <!-- get term level -->
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestor_ids_default</str>
+      <str name='dest'>level_i</str>
+    </processor>
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestor_ids_pol.admin.hier</str>
+      <str name='dest'>level_i</str>
+    </processor>
+    <processor class='solr.CountFieldValuesUpdateProcessorFactory'>
+      <str name='fieldName'>level_i</str>
+    </processor>
+
+<!-- associated subject autocomplete faceting -->
+   <processor class="solr.StatelessScriptUpdateProcessorFactory">
+     <str name="script">autofacet.js</str>
+     <lst name="params">
+       <str name="text_field">associated_subjects</str>
+       <str name="id_field">associated_subject_ids</str>
+       <str name="facet_field">associated_subjects_autocomplete</str>
+     </lst>
+   </processor>
+
+    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+      <str name="script">autofacet.js</str>
+      <lst name="params">
+        <str name="text_field">feature_types</str>
+        <str name="id_field">feature_type_ids</str>
+        <str name="facet_field">feature_types_autocomplete</str>
       </lst>
     </processor>
     <processor class="solr.LogUpdateProcessorFactory"/>
@@ -1780,5 +1837,13 @@
   <admin>
     <defaultQuery>*:*</defaultQuery>
   </admin>
+
+<!-- dataimport handler ys2n  -->
+<requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
+<lst name="defaults">
+  <str name="config">data-config.xml</str>
+  <str name="update.chain">add-unknown-fields-to-the-schema</str>
+</lst>
+</requestHandler>
 
 </config>

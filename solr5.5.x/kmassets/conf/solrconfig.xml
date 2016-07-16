@@ -691,6 +691,11 @@
        not be initialized until the first request that uses it.
 
     -->
+  <requestHandler name="/select" class="solr.SearchHandler" default="true">
+     <lst name="defaults">
+       <str name="df">kmapid</str>
+     </lst>
+  </requestHandler>
   <!-- SearchHandler
 
        http://wiki.apache.org/solr/SearchHandler
@@ -700,10 +705,13 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
-  <!--<requestHandler name="search" class="solr.SearchHandler" default="true">-->
+  <requestHandler name="search" class="solr.SearchHandler">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
       -->
+     <lst name="defaults">
+       <str name="df">kmapid</str>
+     </lst>
      <!--<lst name="defaults">
        <str name="echoParams">explicit</str>
        <int name="rows">10</int>
@@ -760,7 +768,7 @@
          <str>nameOfCustomComponent2</str>
        </arr>
       -->
-    <!--</requestHandler>-->
+  </requestHandler>
 
   <!-- A Robust Example
 

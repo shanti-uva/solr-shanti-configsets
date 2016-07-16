@@ -32,14 +32,6 @@
     </analyzer>
   </fieldType>
   <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
-  <fieldType name="facet_autocomplete" class="solr.TextField">
-    <analyzer type="index">
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter=" " reverse="true"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-    </analyzer>
-  </fieldType>
   <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
   <fieldType name="ignored" class="solr.StrField" multiValued="true" indexed="false" stored="false"/>
   <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
@@ -50,14 +42,6 @@
     <analyzer>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="path_hierarchy" class="solr.TextField">
-    <analyzer type="index">
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="payloads" class="solr.TextField" indexed="true" stored="false">
@@ -74,7 +58,14 @@
   </fieldType>
   <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
   <fieldType name="random" class="solr.RandomSortField" indexed="true"/>
-  <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+  <!-- <fieldType name="string" class="solr.StrField" sortMissingLast="true"/> -->
+<fieldType name="string" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+	<analyzer>
+		<tokenizer class="solr.KeywordTokenizerFactory"/>
+		<filter class="solr.LowerCaseFilterFactory"/>
+		<filter class="solr.ASCIIFoldingFilterFactory"/>
+	</analyzer>
+</fieldType>
   <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
   <fieldType name="tdates" class="solr.TrieDateField" precisionStep="6" multiValued="true" positionIncrementGap="0"/>
   <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
@@ -86,17 +77,6 @@
       <filter class="solr.StopFilterFactory" words="lang/stopwords_ar.txt" ignoreCase="true"/>
       <filter class="solr.ArabicNormalizationFilterFactory"/>
       <filter class="solr.ArabicStemFilterFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="text_autocomplete" class="solr.TextField">
-    <analyzer type="index">
-      <charFilter class="solr.PatternReplaceCharFilterFactory" replacement=" " pattern="[\s-)(,;་།]+"/>
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter=" " reverse="true"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.EdgeNGramFilterFactory" maxGramSize="25" minGramSize="1"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_bg" class="solr.TextField" positionIncrementGap="100">
@@ -441,30 +421,85 @@
   <fieldType name="tints" class="solr.TrieIntField" precisionStep="8" multiValued="true" positionIncrementGap="0"/>
   <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
   <fieldType name="tlongs" class="solr.TrieLongField" precisionStep="8" multiValued="true" positionIncrementGap="0"/>
+ <fieldType name="text_autocomplete" class="solr.TextField">
+   <analyzer type="index">
+     <!-- replace non-letter characters with a single space -->
+     <!-- 0F0B TIBETAN MARK INTERSYLLABIC TSHEG
+          0F0D TIBETAN MARK SHAD -->
+     <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[\s-)(,;་།]+" replacement=" " />
+     <!-- create reverse path tokens on whitespace for infix searches -->
+     <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter=" " reverse="true" />
+     <!-- ignore case -->
+     <filter class="solr.LowerCaseFilterFactory"/>
+     <!-- speed up search with exact match ngram searching -->
+     <filter class="solr.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="25" />
+   </analyzer>
+   <analyzer type="query">
+     <tokenizer class="solr.KeywordTokenizerFactory" />
+   </analyzer>
+ </fieldType>
+  <!-- for autofaceting -->
+  <fieldType name="facet_autocomplete" class="solr.TextField">
+    <analyzer type="index">
+      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter=" " reverse="true"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="path_hierarchy" class="solr.TextField">
+    <analyzer type="index">
+      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+    </analyzer>
+  </fieldType>
+
+  <fieldType name="lpath_hierarchy" class="solr.TextField">
+    <analyzer type="index">
+      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
+      <filter class="solr.PatternReplaceFilterFactory" pattern="(.+)" replacement="$1:$1" />
+      <filter class="solr.PatternReplaceFilterFactory" pattern="\d(?=.*\:)" replacement="" />
+      <filter class="solr.PatternReplaceFilterFactory" pattern="\:" replacement="/" />
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+    </analyzer>
+  </fieldType>
+
+  <fieldType name="xfacet" class="solr.TextField">
+    <analyzer type="index">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.PatternReplaceFilterFactory" pattern="^.*\|" replacement=""/>
+      <filter class="solr.PatternReplaceFilterFactory" pattern="_" replacement=" " replace="all"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+    </analyzer>
+  </fieldType>
+
   <field name="_timestamp_" type="tdate" default="NOW" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="_version_" type="long" indexed="true" stored="true"/>
   <field name="ancestor_ids_cult.reg" type="tlongs"/>
   <field name="ancestor_ids_default" type="tlongs"/>
   <field name="ancestor_ids_pol.admin.hier" type="tlongs"/>
-  <field name="ancestors" type="string" multiValued="true"/>
+  <field name="ancestors" multiValued="true" type="string"/>
   <field name="ancestors_cult.reg" type="text_general"/>
-  <field name="ancestors_default" type="string" multiValued="true"/>
+  <field name="ancestors_default" multiValued="true" type="string"/>
   <field name="ancestors_id_cult.reg" type="tlongs"/>
   <field name="ancestors_id_pol.admin.hier" type="tlongs"/>
   <field name="ancestors_pol.admin.hier" type="text_general"/>
-  <field name="associated_subject_ids" type="tlongs"/>
-  <field name="associated_subjects" type="text_general"/>
   <field name="bloop" type="text_general"/>
   <field name="caption_bod" type="text_general"/>
   <field name="caption_dzo" type="text_general"/>
   <field name="caption_eng" type="text_general"/>
-  <field name="caption_zho" type="text_general"/>
   <field name="checksum" type="text_general"/>
   <field name="closest_fid_with_shapes" type="tlong"/>
   <field name="created_at" type="tdate"/>
   <field name="etag" type="text_general" multiValued="false"/>
   <field name="feature_type_ids" type="tlongs"/>
-  <field name="feature_types" type="string" multiValued="true"/>
+  <field name="feature_types" multiValued="true" type="string"/>
   <field name="feature_types_autocomplete" type="facet_autocomplete" multiValued="true" stored="true"/>
   <field name="has_altitudes" type="boolean"/>
   <field name="has_shapes" type="boolean"/>
@@ -475,21 +510,27 @@
   <field name="interactive_map_url" type="text_general" multiValued="false"/>
   <field name="kmz_url" type="text_general" multiValued="false"/>
   <field name="name" type="string" multiValued="true" stored="true"/>
-  <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
   <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
+  <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
   <field name="summary_bod" type="text_general"/>
   <field name="summary_dzo" type="text_general"/>
   <field name="summary_eng" type="text_general"/>
-  <field name="summary_zho" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="tree" type="text_general" multiValued="false"/>
   <field name="uid" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="updated_at" type="tdate"/>
   <field name="version" type="tlongs"/>
+<field name="summary_zho" type="text_general"/>
+<field name="caption_zho" type="text_general"/>
+<field name="associated_subject_ids" type="tlongs"/>
+ <field name="associated_subjects" type="string" multiValued="true"/>
+ <field name="associated_subjects_autocomplete" type="facet_autocomplete" multiValued="true" stored="true"/>
+  <dynamicField name="*_path" type="path_hierarchy" indexed="true" stored="true"/>
+  <dynamicField name="*_lpath" type="lpath_hierarchy" indexed="true" stored="false"/>
+  <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
   <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
   <dynamicField name="random_*" type="random"/>
-  <dynamicField name="*_path" type="path_hierarchy" indexed="true" stored="true"/>
   <dynamicField name="*_hans" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_hant" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
@@ -530,4 +571,9 @@
   <copyField source="*_latin" dest="text"/>
   <copyField source="*_hans" dest="name_zh"/>
   <copyField source="*_hant" dest="name_zh"/>
+  <copyField source="feature_types_autocomplete" dest="feature_types_xfacet"/>
+  <copyField source="associated_subjects_autocomplete" dest="associated_subjects_xfacet"/>
+  <copyField source="ancestor_id_path" dest="ancestor_id_lpath"/>
+  <copyField source="header" dest="header_s"/>
+
 </schema>
