@@ -2,12 +2,12 @@
 <!-- Solr managed schema - automatically generated - DO NOT EDIT -->
 <schema name="example-schemaless" version="1.5">
   <uniqueKey>id</uniqueKey>
-  <fieldType name="alphaOnlySort" class="solr.TextField" omitNorms="true" sortMissingLast="true">
+  <fieldType name="alphaOnlySort" class="solr.TextField" sortMissingLast="true" omitNorms="true">
     <analyzer>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.TrimFilterFactory"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="([^a-z])" replace="all" replacement=""/>
+      <filter class="solr.PatternReplaceFilterFactory" replace="all" replacement="" pattern="([^a-z])"/>
     </analyzer>
   </fieldType>
   <fieldType name="ancestor_path" class="solr.TextField">
@@ -20,9 +20,9 @@
   </fieldType>
   <fieldType name="binary" class="solr.BinaryField"/>
   <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
-  <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true" multiValued="true"/>
-  <fieldType name="currency" class="solr.CurrencyField" currencyConfig="currency.xml" defaultCurrency="USD" precisionStep="8"/>
-  <fieldType name="date" class="solr.TrieDateField" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="booleans" class="solr.BoolField" multiValued="true" sortMissingLast="true"/>
+  <fieldType name="currency" class="solr.CurrencyField" precisionStep="8" currencyConfig="currency.xml" defaultCurrency="USD"/>
+  <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
   <fieldType name="descendent_path" class="solr.TextField">
     <analyzer type="index">
       <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
@@ -31,44 +31,17 @@
       <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
-  <fieldType name="double" class="solr.TrieDoubleField" positionIncrementGap="0" precisionStep="0"/>
-  <fieldType name="facet_autocomplete" class="solr.TextField">
-    <analyzer type="index">
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" reverse="true" delimiter=" "/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="float" class="solr.TrieFloatField" positionIncrementGap="0" precisionStep="0"/>
-  <fieldType name="ignored" class="solr.StrField" indexed="false" stored="false" multiValued="true"/>
-  <fieldType name="int" class="solr.TrieIntField" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+  <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+  <fieldType name="ignored" class="solr.StrField" multiValued="true" indexed="false" stored="false"/>
+  <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
   <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
-  <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" distErrPct="0.025" units="degrees"/>
-  <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" distErrPct="0.025" geo="true" maxDistErr="0.000009" units="degrees"/>
+  <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
   <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="lpath_hierarchy" class="solr.TextField">
-    <analyzer type="index">
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="(.+)" replacement="$1:$1"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="\d(?=.*\:)" replacement=""/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="\:" replacement="/"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="path_hierarchy" class="solr.TextField">
-    <analyzer type="index">
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="payloads" class="solr.TextField" indexed="true" stored="false">
@@ -83,22 +56,13 @@
       <filter class="solr.DoubleMetaphoneFilterFactory" inject="false"/>
     </analyzer>
   </fieldType>
-  <fieldType name="point" class="solr.PointType" subFieldSuffix="_d" dimension="2"/>
+  <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
   <fieldType name="random" class="solr.RandomSortField" indexed="true"/>
-  <fieldType name="string" class="solr.TextField" sortMissingLast="true"/>
-  <fieldType name="string_sortable" class="solr.TextField" omitNorms="true" sortMissingLast="true">
-    <analyzer>
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-      <filter class="solr.TrimFilterFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.ASCIIFoldingFilterFactory"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="([^\p{L}\s])" replacement=""/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="tdate" class="solr.TrieDateField" positionIncrementGap="0" precisionStep="6"/>
-  <fieldType name="tdates" class="solr.TrieDateField" positionIncrementGap="0" multiValued="true" precisionStep="6"/>
-  <fieldType name="tdouble" class="solr.TrieDoubleField" positionIncrementGap="0" precisionStep="8"/>
-  <fieldType name="tdoubles" class="solr.TrieDoubleField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
+  <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+  <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+  <fieldType name="tdates" class="solr.TrieDateField" precisionStep="6" multiValued="true" positionIncrementGap="0"/>
+  <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+  <fieldType name="tdoubles" class="solr.TrieDoubleField" precisionStep="8" multiValued="true" positionIncrementGap="0"/>
   <fieldType name="text_ar" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -106,17 +70,6 @@
       <filter class="solr.StopFilterFactory" words="lang/stopwords_ar.txt" ignoreCase="true"/>
       <filter class="solr.ArabicNormalizationFilterFactory"/>
       <filter class="solr.ArabicStemFilterFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="text_autocomplete" class="solr.TextField">
-    <analyzer type="index">
-      <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[\s-)(,;་།]+" replacement=" "/>
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" reverse="true" delimiter=" "/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.EdgeNGramFilterFactory" maxGramSize="25" minGramSize="1"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_bg" class="solr.TextField" positionIncrementGap="100">
@@ -156,7 +109,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_da.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_da.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Danish"/>
     </analyzer>
   </fieldType>
@@ -164,7 +117,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_de.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_de.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.GermanNormalizationFilterFactory"/>
       <filter class="solr.GermanLightStemFilterFactory"/>
     </analyzer>
@@ -188,7 +141,7 @@
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.SynonymFilterFactory" expand="true" synonyms="synonyms.txt" ignoreCase="true"/>
       <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.EnglishPossessiveFilterFactory"/>
@@ -196,31 +149,31 @@
       <filter class="solr.PorterStemFilterFactory"/>
     </analyzer>
   </fieldType>
-  <fieldType name="text_en_splitting" class="solr.TextField" autoGeneratePhraseQueries="true" positionIncrementGap="100">
+  <fieldType name="text_en_splitting" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="true">
     <analyzer type="index">
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
       <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt" ignoreCase="true"/>
-      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="1" generateNumberParts="1" splitOnCaseChange="1" generateWordParts="1" catenateAll="0" catenateWords="1"/>
+      <filter class="solr.WordDelimiterFilterFactory" generateNumberParts="1" splitOnCaseChange="1" catenateWords="1" generateWordParts="1" catenateAll="0" catenateNumbers="1"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
       <filter class="solr.PorterStemFilterFactory"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
-      <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.SynonymFilterFactory" expand="true" synonyms="synonyms.txt" ignoreCase="true"/>
       <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt" ignoreCase="true"/>
-      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="0" generateNumberParts="1" splitOnCaseChange="1" generateWordParts="1" catenateAll="0" catenateWords="0"/>
+      <filter class="solr.WordDelimiterFilterFactory" generateNumberParts="1" splitOnCaseChange="1" catenateWords="0" generateWordParts="1" catenateAll="0" catenateNumbers="0"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
       <filter class="solr.PorterStemFilterFactory"/>
     </analyzer>
   </fieldType>
-  <fieldType name="text_en_splitting_tight" class="solr.TextField" autoGeneratePhraseQueries="true" positionIncrementGap="100">
+  <fieldType name="text_en_splitting_tight" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="true">
     <analyzer>
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
-      <filter class="solr.SynonymFilterFactory" expand="false" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.SynonymFilterFactory" expand="false" synonyms="synonyms.txt" ignoreCase="true"/>
       <filter class="solr.StopFilterFactory" words="lang/stopwords_en.txt" ignoreCase="true"/>
-      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="1" generateNumberParts="0" generateWordParts="0" catenateAll="0" catenateWords="1"/>
+      <filter class="solr.WordDelimiterFilterFactory" generateNumberParts="0" catenateWords="1" generateWordParts="0" catenateAll="0" catenateNumbers="1"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
       <filter class="solr.EnglishMinimalStemFilterFactory"/>
@@ -231,7 +184,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_es.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_es.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SpanishLightStemFilterFactory"/>
     </analyzer>
   </fieldType>
@@ -257,7 +210,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_fi.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_fi.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Finnish"/>
     </analyzer>
   </fieldType>
@@ -266,7 +219,7 @@
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.ElisionFilterFactory" articles="lang/contractions_fr.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_fr.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_fr.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.FrenchLightStemFilterFactory"/>
     </analyzer>
   </fieldType>
@@ -280,18 +233,16 @@
       <filter class="solr.SnowballPorterFilterFactory" language="Irish"/>
     </analyzer>
   </fieldType>
-  <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+  <fieldType name="text_general" class="solr.TextField" multiValued="true" positionIncrementGap="100">
     <analyzer type="index">
-      <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
     <analyzer type="query">
-      <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-ISOLatin1Accent.txt"/>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
-      <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.SynonymFilterFactory" expand="true" synonyms="synonyms.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
   </fieldType>
@@ -300,11 +251,11 @@
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.ReversedWildcardFilterFactory" maxPosQuestion="2" maxFractionAsterisk="0.33" maxPosAsterisk="3" withOriginal="true"/>
+      <filter class="solr.ReversedWildcardFilterFactory" maxFractionAsterisk="0.33" withOriginal="true" maxPosQuestion="2" maxPosAsterisk="3"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.StandardTokenizerFactory"/>
-      <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.SynonymFilterFactory" expand="true" synonyms="synonyms.txt" ignoreCase="true"/>
       <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
@@ -331,7 +282,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_hu.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_hu.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Hungarian"/>
     </analyzer>
   </fieldType>
@@ -356,11 +307,11 @@
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.ElisionFilterFactory" articles="lang/contractions_it.txt" ignoreCase="true"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_it.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_it.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.ItalianLightStemFilterFactory"/>
     </analyzer>
   </fieldType>
-  <fieldType name="text_ja" class="solr.TextField" autoGeneratePhraseQueries="false" positionIncrementGap="100">
+  <fieldType name="text_ja" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
     <analyzer>
       <tokenizer class="solr.JapaneseTokenizerFactory" mode="search"/>
       <filter class="solr.JapaneseBaseFormFilterFactory"/>
@@ -369,12 +320,6 @@
       <filter class="solr.StopFilterFactory" words="lang/stopwords_ja.txt" ignoreCase="true"/>
       <filter class="solr.JapaneseKatakanaStemFilterFactory" minimumLength="4"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-    </analyzer>
-  </fieldType>
-  <fieldType name="text_kw" class="solr.TextField" positionIncrementGap="100">
-    <analyzer>
-      <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_lv" class="solr.TextField" positionIncrementGap="100">
@@ -389,7 +334,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_nl.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_nl.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.StemmerOverrideFilterFactory" dictionary="lang/stemdict_nl.txt" ignoreCase="false"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Dutch"/>
     </analyzer>
@@ -398,7 +343,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_no.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_no.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Norwegian"/>
     </analyzer>
   </fieldType>
@@ -406,7 +351,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_pt.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_pt.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.PortugueseLightStemFilterFactory"/>
     </analyzer>
   </fieldType>
@@ -422,7 +367,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_ru.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_ru.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Russian"/>
     </analyzer>
   </fieldType>
@@ -430,7 +375,7 @@
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.StopFilterFactory" format="snowball" words="lang/stopwords_sv.txt" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" words="lang/stopwords_sv.txt" format="snowball" ignoreCase="true"/>
       <filter class="solr.SnowballPorterFilterFactory" language="Swedish"/>
     </analyzer>
   </fieldType>
@@ -455,48 +400,32 @@
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
     </analyzer>
   </fieldType>
-  <fieldType name="tfloat" class="solr.TrieFloatField" positionIncrementGap="0" precisionStep="8"/>
-  <fieldType name="tfloats" class="solr.TrieFloatField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
-  <fieldType name="tint" class="solr.TrieIntField" positionIncrementGap="0" precisionStep="8"/>
-  <fieldType name="tints" class="solr.TrieIntField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
-  <fieldType name="tlong" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="8"/>
-  <fieldType name="tlongs" class="solr.TrieLongField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
-  <fieldType name="xfacet" class="solr.TextField">
-    <analyzer type="index">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="^.*\|" replacement=""/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="_" replace="all" replacement=" "/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-    </analyzer>
-  </fieldType>
+  <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
+  <fieldType name="tfloats" class="solr.TrieFloatField" precisionStep="8" multiValued="true" positionIncrementGap="0"/>
+  <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
+  <fieldType name="tints" class="solr.TrieIntField" precisionStep="8" multiValued="true" positionIncrementGap="0"/>
+  <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
+  <fieldType name="tlongs" class="solr.TrieLongField" precisionStep="8" multiValued="true" positionIncrementGap="0"/>
   <field name="_timestamp_" type="tdate" default="NOW" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="_version_" type="long" indexed="true" stored="true"/>
   <field name="ancestor_ids_cult.reg" type="tlongs"/>
   <field name="ancestor_ids_default" type="tlongs"/>
   <field name="ancestor_ids_pol.admin.hier" type="tlongs"/>
-  <field name="ancestors" type="string" multiValued="true"/>
+  <field name="ancestors" type="text_general"/>
   <field name="ancestors_cult.reg" type="text_general"/>
-  <field name="ancestors_default" type="string" multiValued="true"/>
+  <field name="ancestors_default" type="text_general"/>
   <field name="ancestors_id_cult.reg" type="tlongs"/>
   <field name="ancestors_id_pol.admin.hier" type="tlongs"/>
   <field name="ancestors_pol.admin.hier" type="text_general"/>
-  <field name="associated_subject_ids" type="tlongs"/>
-  <field name="associated_subjects" type="string" multiValued="true"/>
-  <field name="associated_subjects_autocomplete" type="facet_autocomplete" multiValued="true" stored="true"/>
   <field name="bloop" type="text_general"/>
   <field name="caption_bod" type="text_general"/>
-  <field name="caption_dzo" type="text_general"/>
   <field name="caption_eng" type="text_general"/>
-  <field name="caption_zho" type="text_general"/>
   <field name="checksum" type="text_general"/>
   <field name="closest_fid_with_shapes" type="tlong"/>
   <field name="created_at" type="tdate"/>
   <field name="etag" type="text_general" multiValued="false"/>
   <field name="feature_type_ids" type="tlongs"/>
-  <field name="feature_types" type="string" multiValued="true"/>
-  <field name="feature_types_autocomplete" type="facet_autocomplete" multiValued="true" stored="true"/>
+  <field name="feature_types" type="text_general"/>
   <field name="has_altitudes" type="boolean"/>
   <field name="has_shapes" type="boolean"/>
   <field name="header" type="text_general" multiValued="false"/>
@@ -506,28 +435,19 @@
   <field name="interactive_map_url" type="text_general" multiValued="false"/>
   <field name="kmz_url" type="text_general" multiValued="false"/>
   <field name="name" type="string" multiValued="true" stored="true"/>
-  <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
-  <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
   <field name="summary_bod" type="text_general"/>
-  <field name="summary_dzo" type="text_general"/>
   <field name="summary_eng" type="text_general"/>
-  <field name="summary_zho" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="tree" type="text_general" multiValued="false"/>
   <field name="uid" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="updated_at" type="tdate"/>
   <field name="version" type="tlongs"/>
+  <dynamicField name="*_hans" type="text_cjk" indexed="true" stored="true"/>
+  <dynamicField name="*_hant" type="text_cjk" indexed="true" stored="true"/>
   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
   <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
-  <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="random_*" type="random"/>
-  <dynamicField name="*_lpath" type="lpath_hierarchy" indexed="true" stored="false"/>
-  <dynamicField name="*_ssort" type="string_sortable" indexed="true"/>
-  <dynamicField name="*_path" type="path_hierarchy" indexed="true" stored="true"/>
-  <dynamicField name="*_hans" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
-  <dynamicField name="*_hant" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
-  <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
-  <dynamicField name="name_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="name_*" type="text_general" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="attr_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_txt" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_dts" type="date" multiValued="true" indexed="true" stored="true"/>
@@ -556,16 +476,8 @@
   <copyField source="ancestors_default" dest="ancestors"/>
   <copyField source="ancestors_pol.admin.hier" dest="ancestors"/>
   <copyField source="id" dest="uid"/>
-  <copyField source="*_latin" dest="name_autocomplete"/>
-  <copyField source="*_tibt" dest="name_autocomplete"/>
+  <copyField source="name_*" dest="name"/>
   <copyField source="caption_*" dest="text"/>
   <copyField source="summary_*" dest="text"/>
-  <copyField source="*_latin" dest="text"/>
-  <copyField source="*_hans" dest="name_zh"/>
-  <copyField source="*_hant" dest="name_zh"/>
-  <copyField source="feature_types_autocomplete" dest="feature_types_xfacet"/>
-  <copyField source="associated_subjects_autocomplete" dest="associated_subjects_xfacet"/>
-  <copyField source="ancestor_id_path" dest="ancestor_id_lpath"/>
-  <copyField source="*_latin" dest="name"/>
-  <copyField source="header" dest="header_ssort"/>
+  <copyField source="name_*" dest="text"/>
 </schema>
