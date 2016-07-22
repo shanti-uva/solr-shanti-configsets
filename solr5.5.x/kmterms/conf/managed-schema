@@ -89,10 +89,10 @@
   <fieldType name="string_sortable" class="solr.TextField" omitNorms="true" sortMissingLast="true">
     <analyzer>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
-      <filter class="solr.TrimFilterFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.ASCIIFoldingFilterFactory"/>
       <filter class="solr.PatternReplaceFilterFactory" pattern="([^\p{L}\s])" replacement=""/>
+      <filter class="solr.TrimFilterFactory"/>
     </analyzer>
   </fieldType>
   <fieldType name="tdate" class="solr.TrieDateField" positionIncrementGap="0" precisionStep="6"/>
