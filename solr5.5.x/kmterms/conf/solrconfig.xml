@@ -1619,7 +1619,13 @@
         <str name="fieldType">tdoubles</str>
       </lst>
     </processor>
-    
+
+    <!-- delete fields that will be auto-generated later -->
+    <processor class='solr.IgnoreFieldUpdateProcessorFactory'>
+      <str name='fieldName'>header_s</str>
+      <str name='fieldName'>_version_</str>
+    </processor>
+ 
     <!-- get ancestor ids as path -->
     <processor class='solr.IgnoreFieldUpdateProcessorFactory'>
       <str name='fieldName'>ancestor_id_path</str>
@@ -1844,7 +1850,7 @@
 <!-- dataimport handler ys2n  -->
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
-  <str name="config">data-config.xml</str>
+  <str name="config">copydev.xml</str>
   <str name="update.chain">add-unknown-fields-to-the-schema</str>
 </lst>
 </requestHandler>
