@@ -49,60 +49,13 @@
     -->
   <luceneMatchVersion>${solr.luceneMatchVersion:LUCENE_40}</luceneMatchVersion>
 
-  <!-- lib directives can be used to instruct Solr to load an Jars
-       identified and use them to resolve any "plugins" specified in
-       your solrconfig.xml or schema.xml (ie: Analyzers, Request
-       Handlers, etc...).
-
-       All directories and paths are resolved relative to the
-       instanceDir.
-
-       If a "./lib" directory exists in your instanceDir, all files
-       found in it are included as if you had used the following
-       syntax...
-       
-              <lib dir="./lib" />
-    -->
-  
-  <!-- A dir option by itself adds any files found in the directory to
-       the classpath, this is useful for including all jars in a
-       directory.
-    -->
   <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lib" />
   <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lucene-libs" />
   <lib dir="${solr.contrib.dir:../../../contrib}/extraction/lib" />
   <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
+  <lib dir="${solr.install.dir:../../../..}/contrib/dataimporthandler/lib" regex=".*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
 
-  <!-- The velocity library has been known to crash Solr in some
-       instances when deployed as a war file to Tomcat. Therefore all
-       references have been removed from the default configuration.
-       @see http://drupal.org/node/1612556
-  -->
-  <!-- <lib dir="../../contrib/velocity/lib" /> -->
-
-  <!-- When a regex is specified in addition to a directory, only the
-       files in that directory which completely match the regex
-       (anchored on both ends) will be included.
-    -->
-  <!--<lib dir="../../dist/" regex="apache-solr-cell-\d.*\.jar" />-->
-  <!--<lib dir="../../dist/" regex="apache-solr-clustering-\d.*\.jar" />-->
-  <!--<lib dir="../../dist/" regex="apache-solr-dataimporthandler-\d.*\.jar" />-->
-  <!--<lib dir="../../dist/" regex="apache-solr-langid-\d.*\.jar" />-->
-  <!-- <lib dir="../../dist/" regex="apache-solr-velocity-\d.*\.jar" /> -->
-
-  <!-- If a dir option (with or without a regex) is used and nothing
-       is found that matches, it will be ignored
-    -->
-  <!--<lib dir="../../contrib/clustering/lib/" />-->
-  <!--<lib dir="/total/crap/dir/ignored" />-->
-
-  <!-- an exact path can be used to specify a specific file.  This
-       will cause a serious error to be logged if it can't be loaded.
-    -->
-  <!--
-  <lib path="../a-jar-that-does-not-exist.jar" /> 
-  -->
-  
   <!-- Data Directory
 
        Used to specify an alternate directory to hold all index data
@@ -1093,6 +1046,13 @@
     </lst>
   </requestHandler>
 
+  <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
+    <lst name="defaults">
+      <str name="config">copydev.xml</str>
+      <str name="update.chain">remove-copied-fields</str>
+    </lst>
+  </requestHandler>
+
   <!-- Search Components
 
        Search components are registered to SolrCore and used by
@@ -1437,37 +1397,14 @@
     </highlighting>
   </searchComponent>
 
-  <!-- Update Processors
-
-       Chains of Update Processor Factories for dealing with Update
-       Requests can be declared, and then used by name in Update
-       Request Processors
-
-       http://wiki.apache.org/solr/UpdateRequestProcessor
-
-    --> 
-  <!-- Deduplication
-
-       An example dedup update processor that creates the "id" field
-       on the fly based on the hash code of some other fields.  This
-       example has overwriteDupes set to false since we are using the
-       id field as the signatureField and Solr will maintain
-       uniqueness based on that anyway.  
-       
-    -->
-  <!--
-     <updateRequestProcessorChain name="dedupe">
-       <processor class="solr.processor.SignatureUpdateProcessorFactory">
-         <bool name="enabled">true</bool>
-         <str name="signatureField">id</str>
-         <bool name="overwriteDupes">false</bool>
-         <str name="fields">name,features,cat</str>
-         <str name="signatureClass">solr.processor.Lookup3Signature</str>
+     <updateRequestProcessorChain name="remove-copied-fields">
+       <processor class="solr.IgnoreFieldUpdateProcessorFactory">
+         <str name="fieldRegex">sort_*</str>
+         <str name="fieldName">spell</str>
+         <str name="fieldName">_version_</str>
+         <str name="fieldName">taxonomy_names</str>
        </processor>
-       <processor class="solr.LogUpdateProcessorFactory" />
-       <processor class="solr.RunUpdateProcessorFactory" />
      </updateRequestProcessorChain>
-    -->
 
     <!--
        This example update chain identifies the language of the incoming
