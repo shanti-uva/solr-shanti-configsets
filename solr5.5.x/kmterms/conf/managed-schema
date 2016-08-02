@@ -522,7 +522,7 @@
   <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="random_*" type="random"/>
   <dynamicField name="*_lpath" type="lpath_hierarchy" indexed="true" stored="false"/>
-  <dynamicField name="*_ssort" type="string_sortable" indexed="true"/>
+  <dynamicField name="*_ssort" type="string_sortable" indexed="true" stored="false"/>
   <dynamicField name="*_path" type="path_hierarchy" indexed="true" stored="true"/>
   <dynamicField name="*_hans" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_hant" type="text_cjk" multiValued="true" indexed="true" stored="true"/>

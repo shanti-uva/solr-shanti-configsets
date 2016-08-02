@@ -1620,7 +1620,7 @@
       </lst>
     </processor>
 
-    <!-- get ancestor ids as path
+    <!-- get ancestor ids as path -->
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_default</str>
       <str name='dest'>ancestor_id_path</str>
