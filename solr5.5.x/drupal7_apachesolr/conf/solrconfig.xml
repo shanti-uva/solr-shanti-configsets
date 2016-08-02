@@ -1398,10 +1398,7 @@
 
      <updateRequestProcessorChain name="remove-copied-fields">
        <processor class="solr.IgnoreFieldUpdateProcessorFactory">
-         <str name="fieldRegex">sort_*</str>
-         <str name="fieldName">spell</str>
-         <str name="fieldName">_version_</str>
-         <str name="fieldName">taxonomy_names</str>
+         <str name="fieldRegex">sort_.*|spell|_version_|taxonomy_names|timestamp</str>
        </processor>
      </updateRequestProcessorChain>
 
