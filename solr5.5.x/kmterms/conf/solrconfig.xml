@@ -1572,7 +1572,7 @@
   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
     <!-- Ignore updates to generated field resulting from "copyField" -->
     <processor class="solr.IgnoreFieldUpdateProcessorFactory">
-        <str name="fieldRegex">uid|ancestors|name|name_autocomplete|text|name_zh|_version_|ancestor_id_path</str>
+        <str name="fieldRegex">uid|ancestors|name|name_autocomplete|text|name_zh|_version_|ancestor_id_path|.*_ssort</str>
     </processor>
     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
@@ -1620,11 +1620,11 @@
       </lst>
     </processor>
 
-    <!-- delete fields that will be auto-generated later -->
+    <!-- delete fields that will be auto-generated later 
     <processor class='solr.IgnoreFieldUpdateProcessorFactory'>
-      <str name='fieldRegex'>*_ssort</str>
+      <str name='fieldName'>header_ssort</str>
       <str name='fieldName'>_version_</str>
-    </processor>
+    </processor> -->
  
     <!-- get ancestor ids as path
     <processor class='solr.IgnoreFieldUpdateProcessorFactory'>
