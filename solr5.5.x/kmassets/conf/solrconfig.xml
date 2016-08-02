@@ -1450,6 +1450,14 @@
        <processor class="solr.RunUpdateProcessorFactory" />
      </updateRequestProcessorChain>
     -->
+
+  <updateRequestProcessorChain name="remove-copied-fields">
+    <processor class="solr.IgnoreFieldUpdateProcessorFactory">
+        <str name="fieldName">_version_</str>
+    </processor>
+    <processor class="solr.LogUpdateProcessorFactory"/>
+    <processor class="solr.RunUpdateProcessorFactory"/>
+  </updateRequestProcessorChain>
  
   <!-- Response Writers
 
@@ -1556,6 +1564,7 @@
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
   <str name="config">copydev.xml</str>
+  <str name="update.chain">remove-copied-fields</str>
 </lst>
 </requestHandler>
 
