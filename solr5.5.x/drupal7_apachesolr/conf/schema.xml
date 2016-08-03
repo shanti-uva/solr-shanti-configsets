@@ -173,14 +173,9 @@
         <!-- in this example, we will only use synonyms at query time
         <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
         -->
-        <!-- Case insensitive stop word removal.
-          add enablePositionIncrements=true in both the index and query
-          analyzers to leave a 'gap' for more accurate phrase queries.
-        -->
         <filter class="solr.StopFilterFactory"
                 ignoreCase="true"
                 words="stopwords.txt"
-                enablePositionIncrements="true"
                 />
         <filter class="solr.WordDelimiterFilterFactory"
                 protected="protwords.txt"
@@ -203,7 +198,6 @@
         <filter class="solr.StopFilterFactory"
                 ignoreCase="true"
                 words="stopwords.txt"
-                enablePositionIncrements="true"
                 />
         <filter class="solr.WordDelimiterFilterFactory"
                 protected="protwords.txt"
@@ -226,7 +220,6 @@
         <filter class="solr.StopFilterFactory"
                 ignoreCase="true"
                 words="stopwords.txt"
-                enablePositionIncrements="true"
                 />
         <filter class="solr.WordDelimiterFilterFactory"
                 protected="protwords.txt"
@@ -248,7 +241,7 @@
     <fieldType name="text_und" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true" />
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
         <filter class="solr.WordDelimiterFilterFactory"
                 protected="protwords.txt"
                 generateWordParts="1"
@@ -266,7 +259,6 @@
         <filter class="solr.StopFilterFactory"
                 ignoreCase="true"
                 words="stopwords.txt"
-                enablePositionIncrements="true"
                 />
         <filter class="solr.WordDelimiterFilterFactory"
                 protected="protwords.txt"
@@ -285,7 +277,6 @@
         <filter class="solr.StopFilterFactory"
                 ignoreCase="true"
                 words="stopwords.txt"
-                enablePositionIncrements="true"
                 />
         <filter class="solr.WordDelimiterFilterFactory"
                 protected="protwords.txt"
