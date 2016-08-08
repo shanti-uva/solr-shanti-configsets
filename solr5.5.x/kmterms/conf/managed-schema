@@ -484,7 +484,7 @@
   <field name="ancestors_pol.admin.hier" type="text_general"/>
   <field name="associated_subject_ids" type="tlongs"/>
   <field name="associated_subjects" type="string" multiValued="true"/>
-  <field name="associated_subjects_autocomplete" type="facet_autocomplete" multiValued="true" stored="true"/>
+  <field name="associated_subjects_autocomplete" type="facet_autocomplete" multiValued="true" indexed="true" stored="false"/>
   <field name="bloop" type="text_general"/>
   <field name="caption_bod" type="text_general"/>
   <field name="caption_dzo" type="text_general"/>
@@ -496,7 +496,7 @@
   <field name="etag" type="text_general" multiValued="false"/>
   <field name="feature_type_ids" type="tlongs"/>
   <field name="feature_types" type="string" multiValued="true"/>
-  <field name="feature_types_autocomplete" type="facet_autocomplete" multiValued="true" stored="true"/>
+  <field name="feature_types_autocomplete" type="facet_autocomplete" multiValued="true" indexed="true" stored="false"/>
   <field name="has_altitudes" type="boolean"/>
   <field name="has_shapes" type="boolean"/>
   <field name="header" type="text_general" multiValued="false"/>
@@ -563,9 +563,9 @@
   <copyField source="*_latin" dest="text"/>
   <copyField source="*_hans" dest="name_zh"/>
   <copyField source="*_hant" dest="name_zh"/>
-  <copyField source="feature_types_autocomplete" dest="feature_types_xfacet"/>
-  <copyField source="associated_subjects_autocomplete" dest="associated_subjects_xfacet"/>
   <copyField source="ancestor_id_path" dest="ancestor_id_lpath"/>
   <copyField source="*_latin" dest="name"/>
   <copyField source="header" dest="header_ssort"/>
+  <copyField source="associated_subjects_autocomplete" dest="associated_subjects_xfacet"/>
+  <copyField source="feature_types_autocomplete" dest="feature_types_xfacet"/>
 </schema>

@@ -49,11 +49,10 @@
     -->
   <luceneMatchVersion>5.5</luceneMatchVersion>
 
-  <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lib" />
-  <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lucene-libs" />
-  <lib dir="${solr.contrib.dir:../../../contrib}/extraction/lib" />
-  <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
-
+  <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" />
+  <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" />
+  <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" />
+  <lib dir="${solr.install.dir:../../../..}/contrib/clustering/lib/" />
   <lib dir="${solr.install.dir:../../../..}/contrib/dataimporthandler-extras/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
 
