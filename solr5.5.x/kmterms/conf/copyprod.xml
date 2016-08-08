@@ -1,6 +1,6 @@
 <dataConfig>
   <document>
-    <entity name="places" processor="SolrEntityProcessor" url="http://kidx.shanti.virginia.edu/solr/termindex" query="tree:places" fl="*" />
-    <entity name="subjects" processor="SolrEntityProcessor" url="http://kidx.shanti.virginia.edu/solr/termindex" query="tree:subjects" fl="*" />
+    <entity name="places" processor="SolrEntityProcessor" url="https://ss206212-us-east-1-aws.measuredsearch.com/solr/kmterms" query="tree:places" fl="*" />
+    <entity name="subjects" processor="SolrEntityProcessor" url="https://ss206212-us-east-1-aws.measuredsearch.com/solr/kmterms" query="tree:subjects" fl="*" />
   </document>
 </dataConfig>
