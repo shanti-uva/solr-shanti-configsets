@@ -466,7 +466,7 @@
   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
     <!-- Ignore updates to generated field resulting from "copyField" -->
     <processor class="solr.IgnoreFieldUpdateProcessorFactory">
-        <str name="fieldRegex">uid|ancestors|name|.*_autocomplete|text|name_zh|_version_|ancestor_id_path|header_s</str>
+        <str name="fieldRegex">uid|ancestors|name|.*_autocomplete|text|name_zh|_version_|ancestor_id_path|header_s|level_i</str>
     </processor>
     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
@@ -514,13 +514,35 @@
       </lst>
     </processor>
 
-    <!-- get ancestor ids as path -->
+    <!-- create generic ancestors field -->
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestors_default</str>
+      <str name='dest'>ancestors</str>
+    </processor>
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestors_pol.admin.hier</str>
+      <str name='dest'>ancestors</str>
+    </processor>
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestors_closest_pol.admin.hier</str>
+      <str name='dest'>ancestors</str>
+    </processor>
+
+    <!-- create generic ancestor id field and path -->
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_default</str>
-      <str name='dest'>ancestor_id_path</str>
+      <str name='dest'>ancestor_ids_generic</str>
     </processor>
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_pol.admin.hier</str>
+      <str name='dest'>ancestor_ids_generic</str>
+    </processor>
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestor_ids_closest_pol.admin.hier</str>
+      <str name='dest'>ancestor_ids_generic</str>
+    </processor>
+    <processor class='solr.CloneFieldUpdateProcessorFactory'>
+      <str name='source'>ancestor_ids_generic</str>
       <str name='dest'>ancestor_id_path</str>
     </processor>
     <processor class='solr.ConcatFieldUpdateProcessorFactory'>

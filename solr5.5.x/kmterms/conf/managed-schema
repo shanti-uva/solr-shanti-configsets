@@ -473,15 +473,7 @@
   </fieldType>
   <field name="_timestamp_" type="tdate" default="NOW" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="_version_" type="long" indexed="true" stored="true"/>
-  <field name="ancestor_ids_cult.reg" type="tlongs"/>
-  <field name="ancestor_ids_default" type="tlongs"/>
-  <field name="ancestor_ids_pol.admin.hier" type="tlongs"/>
   <field name="ancestors" type="string" multiValued="true"/>
-  <field name="ancestors_cult.reg" type="text_general"/>
-  <field name="ancestors_default" type="string" multiValued="true"/>
-  <field name="ancestors_id_cult.reg" type="tlongs"/>
-  <field name="ancestors_id_pol.admin.hier" type="tlongs"/>
-  <field name="ancestors_pol.admin.hier" type="text_general"/>
   <field name="associated_subject_ids" type="tlongs"/>
   <field name="associated_subjects" type="string" multiValued="true"/>
   <field name="associated_subjects_autocomplete" type="facet_autocomplete" multiValued="true" indexed="true" stored="false"/>
@@ -517,7 +509,9 @@
   <field name="uid" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="updated_at" type="tdate"/>
   <field name="version" type="tlongs"/>
+  <dynamicField name="ancestor_ids_*" type="tlongs" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
+  <dynamicField name="ancestors_*" type="string" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
   <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="random_*" type="random"/>
@@ -553,8 +547,6 @@
   <dynamicField name="*_d" type="double" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
   <dynamicField name="*_c" type="currency" indexed="true" stored="true"/>
-  <copyField source="ancestors_default" dest="ancestors"/>
-  <copyField source="ancestors_pol.admin.hier" dest="ancestors"/>
   <copyField source="id" dest="uid"/>
   <copyField source="*_latin" dest="name_autocomplete"/>
   <copyField source="*_tibt" dest="name_autocomplete"/>
