@@ -471,6 +471,7 @@
       <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
+  <field name="_root_" type="string" indexed="true" stored="false"/>
   <field name="_timestamp_" type="tdate" default="NOW" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="_version_" type="long" indexed="true" stored="true"/>
   <field name="ancestors" type="string" multiValued="true"/>
@@ -483,6 +484,7 @@
   <field name="caption_eng" type="text_general"/>
   <field name="caption_zho" type="text_general"/>
   <field name="checksum" type="text_general"/>
+  <field name="child_type" type="string"/>
   <field name="closest_fid_with_shapes" type="tlong"/>
   <field name="created_at" type="tdate"/>
   <field name="etag" type="text_general" multiValued="false"/>
@@ -497,6 +499,7 @@
   <field name="illustration_mms_url" type="text_general"/>
   <field name="interactive_map_url" type="text_general" multiValued="false"/>
   <field name="kmz_url" type="text_general" multiValued="false"/>
+  <field name="message" type="text_general"/>
   <field name="name" type="string" multiValued="true" stored="true"/>
   <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
   <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
@@ -506,6 +509,7 @@
   <field name="summary_zho" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="tree" type="text_general" multiValued="false"/>
+  <field name="type" type="string"/>
   <field name="uid" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="updated_at" type="tdate"/>
   <field name="version" type="tlongs"/>
