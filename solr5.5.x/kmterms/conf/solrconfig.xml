@@ -466,7 +466,7 @@
   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
     <!-- Ignore updates to generated field resulting from "copyField" -->
     <processor class="solr.IgnoreFieldUpdateProcessorFactory">
-        <str name="fieldRegex">uid|ancestors|name|.*_autocomplete|text|name_zh|_version_|ancestor_id_path|header_s|level_i</str>
+        <str name="fieldRegex">uid|ancestors|name|.*_autocomplete|text|name_zh|_version_|ancestor_ids_generic|ancestor_id_path|header_s|level_i</str>
     </processor>
     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
