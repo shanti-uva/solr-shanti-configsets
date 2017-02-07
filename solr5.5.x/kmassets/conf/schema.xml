@@ -55,8 +55,10 @@
    <field name="title" type="text_general" indexed="true" stored="true" multiValued="true"/>
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
+   <field name="language" type="text_general" indexed="true" stored="true" multiValued="false"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/>
+   <field name="creator" type="text_general" indexed="true" stored="true" multiValued="true"/>
    <field name="keywords" type="text_general" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
@@ -65,10 +67,23 @@
    <field name="content_type" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="last_modified" type="date" indexed="true" stored="true"/>
    <field name="links" type="string" indexed="true" stored="true" multiValued="true"/>
-   
+
+   <field name="date_start" type="date" indexed="true" stored="true" multiValued="false"/>
+   <field name="date_end" type="date" indexed="true" stored="true" multiValued="false"/>
+
+   <field name="node_user" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="node_lang" type="string" indexed="true" stored="true" multiValued="false"/> 
+   <field name="node_created" type="date" indexed="true" stored="true" multiValued="false"/>
+   <field name="node_changed" type="date" indexed="true" stored="true" multiValued="false"/>
+ 
+   <field name="collection_title" type="text_general" indexed="true" stored="true" multiValued="false"/>
+   <field name="collection_nid" type="string" indexed="true" stored="true" multiValued="false"/>
+ 
    <field name="service" type="string" indexed="true" stored="true"/>
    <field name="asset_type" type="string" indexed="true" stored="true" multiValued="false" />
+   <field name="asset_subtype" type="string" indexed="true" stored="true" multiValued="false" />
    <field name="kmapid" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="kmapid_strict" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="bundle" type="string" indexed="true" stored="true" />
    <field name="caption" type="text_general" indexed="true" stored="true" />
    <field name="summary" type="text_general" indexed="true" stored="true" />
