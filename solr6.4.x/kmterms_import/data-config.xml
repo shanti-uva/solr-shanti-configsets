@@ -1,0 +1,8 @@
+<dataConfig>
+  <document>
+    <entity name="sep" child="true" processor="SolrEntityProcessor" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="*:*" fl="*">
+    	<field column="header_s" name="_old_header_s" />
+    	<field column="_version_" name="_old_version_" />
+    </entity>
+  </document>
+</dataConfig>

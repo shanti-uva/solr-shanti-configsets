@@ -1,0 +1,16 @@
+<dataConfig>
+  <document>
+    <entity name="subjects" processor="SolrEntityProcessor" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="tree:subjects AND block_type:parent" fl="id,header,tree,closest_fid_with_shapes,feature_type*,ancestor*,has_*,name_*,*_url,*_i,*_ids,*_t,*_s,*_at,*_type">
+	<entity name="subjects_child" processor="SolrEntityProcessor" child="true" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="{!child of=block_type:parent}id:${subjects.id}" fl="id,*_uid_s,*_i,*_ids,*_t,*_s,*_at,*_type">
+	</entity>
+    </entity>
+    <entity name="places" processor="SolrEntityProcessor" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="tree:places AND block_type:parent" fl="id,header,tree,closest_fid_with_shapes,feature_type*,ancestor*,has_*,name_*,*_url,*_i,*_ids,*_t,*_s,*_at,*_type">
+	<entity name="places_child" processor="SolrEntityProcessor" child="true" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="{!child of=block_type:parent}id:${places.id}" fl="id,*_uid_s,*_i,*_ids,*_t,*_s,*_at,*_type">
+	</entity>
+    </entity>
+    <entity name="terms" processor="SolrEntityProcessor" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="tree:terms AND block_type:parent" fl="id,header,tree,closest_fid_with_shapes,feature_type*,ancestor*,has_*,name_*,*_url,*_i,*_ids,*_t,*_s,*_at,*_type">
+	<entity name="terms_child" processor="SolrEntityProcessor" child="true" url="https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_dev" query="{!child of=block_type:parent}id:${terms.id}" fl="id,*_uid_s,*_i,*_ids,*_t,*_s,*_at,*_type">
+	</entity>
+    </entity>
+  </document>
+</dataConfig>
