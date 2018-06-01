@@ -44,7 +44,7 @@
   <fieldType name="ignored" class="solr.StrField" indexed="false" stored="false" multiValued="true"/>
   <fieldType name="int" class="solr.TrieIntField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
-  <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" distErrPct="0.025" units="degrees"/>
+  <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="degrees"/>
   <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
@@ -436,9 +436,8 @@
   </fieldType>
   <fieldType name="text_th" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
-      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <tokenizer class="solr.ThaiTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.ThaiWordFilterFactory"/>
       <filter class="solr.StopFilterFactory" words="lang/stopwords_th.txt" ignoreCase="true"/>
     </analyzer>
   </fieldType>
