@@ -52,14 +52,14 @@
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
-   <field name="title" type="text_general" indexed="true" stored="true" multiValued="true"/>
+   <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
    <field name="language" type="text_general" indexed="true" stored="true" multiValued="false"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/>
-   <field name="creator" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="keywords" type="text_general" indexed="true" stored="true"/>
+   <field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="keywords" type="string" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
    <field name="url" type="text_general" indexed="true" stored="true"/>
@@ -76,7 +76,7 @@
    <field name="node_created" type="date" indexed="true" stored="true" multiValued="false"/>
    <field name="node_changed" type="date" indexed="true" stored="true" multiValued="false"/>
  
-   <field name="collection_title" type="text_general" indexed="true" stored="true" multiValued="false"/>
+   <field name="collection_title" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="collection_nid" type="string" indexed="true" stored="true" multiValued="false"/>
  
    <field name="service" type="string" indexed="true" stored="true"/>
@@ -1028,23 +1028,11 @@
     -->
 
   <fieldType name="text_kw" class="solr.TextField" positionIncrementGap="100">
-      <analyzer type="index">
-        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
-        <tokenizer class="solr.KeywordTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
-        <!-- in this example, we will only use synonyms at query time
-        <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
-        -->
-        <filter class="solr.LowerCaseFilterFactory"/>
-      </analyzer>
-      <analyzer type="query">
-        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
-        <tokenizer class="solr.KeywordTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
-        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-        <filter class="solr.LowerCaseFilterFactory"/>
-      </analyzer>
+    <analyzer>
+      <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
   </fieldType>
 
 </schema>
