@@ -609,6 +609,20 @@
         <str name="facet_field">feature_types_autocomplete</str>
       </lst>
     </processor>
+
+    <!-- create integer unique id -->
+    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+      <str name="script">createJoinId.js</str>
+      <lst name="params">
+       <str name="source_field">uid</str>
+       <str name="target_field">rel_i</str>
+        <str name="places">0</str>
+        <str name="subjects">1</str>
+        <str name="terms">2</str>
+      </lst>
+    </processor>
+
+
     <processor class="solr.LogUpdateProcessorFactory"/>
     <processor class="solr.RunUpdateProcessorFactory"/>
   </updateRequestProcessorChain>
