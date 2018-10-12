@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd /Users/ys2n/Code/solr-shanti-configsets/scripts
+AUTH=solradmin:IdskBsk013
+UPDATE=https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmterms_predev/update
+
+curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>id:places-101479</query></delete>"
+
+/Users/ys2n/Code/solr-6.6.2/bin/post -url ${UPDATE} -u $AUTH ./test-up.json
