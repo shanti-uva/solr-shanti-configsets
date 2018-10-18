@@ -30,6 +30,12 @@ if [ -z "$CONFNAME" ]; then
    exit 1;
 fi
 
+if [ ! -d $CONFDIR/$CONFNAME ]; then
+    echo "ERROR: $CONFDIR/$CONFNAME is not a directory!"
+    exit 1;
+fi
+
+
 EXEC="$ZK -zkhost $ZKHOSTS -cmd $ME -confdir $CONFDIR/$CONFNAME -confname $CONFNAME"
 
 printf "\n$EXEC\n\n"
