@@ -53,7 +53,7 @@
       <str name="dir">${solr.ulog.dir:}</str>
     </updateLog>
     <autoCommit>
-      <maxTime>150000</maxTime>
+      <maxTime>15000</maxTime>
       <openSearcher>false</openSearcher>
     </autoCommit>
   </updateHandler>
@@ -61,17 +61,17 @@
   <query>
     <maxBooleanClauses>1024</maxBooleanClauses>
     <filterCache class="solr.FastLRUCache"
-                 size="2048"
-                 initialSize="1024"
-                 autowarmCount="1024"/>
+                 size="512"
+                 initialSize="512"
+                 autowarmCount="0"/>
     <queryResultCache class="solr.LRUCache"
-                      size="1024"
-                      initialSize="1024"
-                      autowarmCount="1024"/>
+                      size="512"
+                      initialSize="512"
+                      autowarmCount="0"/>
     <documentCache class="solr.LRUCache"
-                   size="2048"
-                   initialSize="1024"
-                   autowarmCount="1024"/>
+                   size="512"
+                   initialSize="512"
+                   autowarmCount="0"/>
     <enableLazyFieldLoading>true</enableLazyFieldLoading>
     <queryResultWindowSize>20</queryResultWindowSize>
     <queryResultMaxDocsCached>200</queryResultMaxDocsCached>
@@ -249,8 +249,8 @@
                   class="solr.DocumentAnalysisRequestHandler"
                   startup="lazy" />
 
-  <!--<requestHandler name="/admin/"
-                  class="solr.admin.AdminHandlers" />-->
+  <requestHandler name="/admin/"
+                  class="solr.admin.AdminHandlers" />
 
   <!-- ping/healthcheck -->
   <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
@@ -466,7 +466,7 @@
   <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
     <!-- Ignore updates to generated field resulting from "copyField" -->
     <processor class="solr.IgnoreFieldUpdateProcessorFactory">
-        <str name="fieldRegex">uid|ancestors|name|.*_autocomplete|text|name_zh|_version_|ancestor_ids_generic|ancestor_uids_generic|ancestor_id_path|header_s|level_i</str>
+        <str name="fieldRegex">uid|ancestors|name|.*_autocomplete|text|name_zh|_version_|ancestor_ids_generic|ancestor_id_path|header_s|level_i</str>
     </processor>
     <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
     <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
@@ -527,43 +527,19 @@
       <str name='source'>ancestors_closest_pol.admin.hier</str>
       <str name='dest'>ancestors</str>
     </processor>
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestors_gen</str>
-      <str name='dest'>ancestors</str>
-    </processor>
 
     <!-- create generic ancestor id field and path -->
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_ids_gen</str>
-      <str name='dest'>ancestor_ids_generic</str>
-    </processor>
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_uids_gen</str>
-      <str name='dest'>ancestor_uids_generic</str>
-    </processor>
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_default</str>
       <str name='dest'>ancestor_ids_generic</str>
-    </processor>
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_uids_default</str>
-      <str name='dest'>ancestor_uids_generic</str>
     </processor>
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_pol.admin.hier</str>
       <str name='dest'>ancestor_ids_generic</str>
     </processor>
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_uids_pol.admin.hier</str>
-      <str name='dest'>ancestor_uids_generic</str>
-    </processor>
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_closest_pol.admin.hier</str>
       <str name='dest'>ancestor_ids_generic</str>
-    </processor>
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_uids_closest_pol.admin.hier</str>
-      <str name='dest'>ancestor_uids_generic</str>
     </processor>
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_generic</str>
@@ -575,10 +551,6 @@
     </processor>
 
     <!-- get term level -->
-    <processor class='solr.CloneFieldUpdateProcessorFactory'>
-      <str name='source'>ancestor_ids_gen</str>
-      <str name='dest'>level_i</str>
-    </processor>
     <processor class='solr.CloneFieldUpdateProcessorFactory'>
       <str name='source'>ancestor_ids_default</str>
       <str name='dest'>level_i</str>
@@ -631,7 +603,7 @@
 <!-- dataimport handler ys2n  -->
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
-  <str name="config">copydev.xml</str>
+  <str name="config">copyprod.xml</str>
   <str name="update.chain">add-unknown-fields-to-the-schema</str>
 </lst>
 </requestHandler>

@@ -49,12 +49,59 @@
     -->
   <luceneMatchVersion>${solr.luceneMatchVersion:LUCENE_40}</luceneMatchVersion>
 
+  <!-- lib directives can be used to instruct Solr to load an Jars
+       identified and use them to resolve any "plugins" specified in
+       your solrconfig.xml or schema.xml (ie: Analyzers, Request
+       Handlers, etc...).
+
+       All directories and paths are resolved relative to the
+       instanceDir.
+
+       If a "./lib" directory exists in your instanceDir, all files
+       found in it are included as if you had used the following
+       syntax...
+       
+              <lib dir="./lib" />
+    -->
+  
+  <!-- A dir option by itself adds any files found in the directory to
+       the classpath, this is useful for including all jars in a
+       directory.
+    -->
   <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lib" />
   <lib dir="${solr.contrib.dir:../../../contrib}/analysis-extras/lucene-libs" />
   <lib dir="${solr.contrib.dir:../../../contrib}/extraction/lib" />
   <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
-  <lib dir="${solr.install.dir:../../../..}/contrib/dataimporthandler/lib" regex=".*\.jar" />
-  <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
+
+  <!-- The velocity library has been known to crash Solr in some
+       instances when deployed as a war file to Tomcat. Therefore all
+       references have been removed from the default configuration.
+       @see http://drupal.org/node/1612556
+  -->
+  <!-- <lib dir="../../contrib/velocity/lib" /> -->
+
+  <!-- When a regex is specified in addition to a directory, only the
+       files in that directory which completely match the regex
+       (anchored on both ends) will be included.
+    -->
+  <!--<lib dir="../../dist/" regex="apache-solr-cell-\d.*\.jar" />-->
+  <!--<lib dir="../../dist/" regex="apache-solr-clustering-\d.*\.jar" />-->
+  <!--<lib dir="../../dist/" regex="apache-solr-dataimporthandler-\d.*\.jar" />-->
+  <!--<lib dir="../../dist/" regex="apache-solr-langid-\d.*\.jar" />-->
+  <!-- <lib dir="../../dist/" regex="apache-solr-velocity-\d.*\.jar" /> -->
+
+  <!-- If a dir option (with or without a regex) is used and nothing
+       is found that matches, it will be ignored
+    -->
+  <!--<lib dir="../../contrib/clustering/lib/" />-->
+  <!--<lib dir="/total/crap/dir/ignored" />-->
+
+  <!-- an exact path can be used to specify a specific file.  This
+       will cause a serious error to be logged if it can't be loaded.
+    -->
+  <!--
+  <lib path="../a-jar-that-does-not-exist.jar" /> 
+  -->
   
   <!-- Data Directory
 
@@ -201,7 +248,7 @@
 
        For more details see http://wiki.apache.org/solr/SolrJmx
     -->
-  <jmx />
+  <!-- <jmx /> -->
   <!-- If you want to connect to a particular server, specify the
        agentId 
     -->
@@ -374,7 +421,7 @@
                and old cache.  
       -->
     <filterCache class="solr.FastLRUCache"
-                 size="2048"
+                 size="512"
                  initialSize="512"
                  autowarmCount="0"/>
 
@@ -384,9 +431,9 @@
          (DocList) based on a query, a sort, and the range of documents requested.  
       -->
     <queryResultCache class="solr.LRUCache"
-                     size="2048"
+                     size="512"
                      initialSize="512"
-                     autowarmCount="1024"/>
+                     autowarmCount="32"/>
    
     <!-- Document Cache
 
@@ -395,9 +442,9 @@
          this cache will not be autowarmed.  
       -->
     <documentCache class="solr.LRUCache"
-                   size="4096"
+                   size="512"
                    initialSize="512"
-                   autowarmCount="1024"/>
+                   autowarmCount="0"/>
     
     <!-- Field Value Cache
          
@@ -644,11 +691,6 @@
        not be initialized until the first request that uses it.
 
     -->
-  <requestHandler name="/select" class="solr.SearchHandler" default="true">
-     <lst name="defaults">
-       <str name="df">kmapid</str>
-     </lst>
-  </requestHandler>
   <!-- SearchHandler
 
        http://wiki.apache.org/solr/SearchHandler
@@ -658,13 +700,10 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
-  <requestHandler name="search" class="solr.SearchHandler">
+  <!--<requestHandler name="search" class="solr.SearchHandler" default="true">-->
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
       -->
-     <lst name="defaults">
-       <str name="df">kmapid</str>
-     </lst>
      <!--<lst name="defaults">
        <str name="echoParams">explicit</str>
        <int name="rows">10</int>
@@ -721,7 +760,7 @@
          <str>nameOfCustomComponent2</str>
        </arr>
       -->
-  </requestHandler>
+    <!--</requestHandler>-->
 
   <!-- A Robust Example
 
@@ -888,7 +927,7 @@
        http://wiki.apache.org/solr/UpdateJSON
     -->
   <requestHandler name="/update/json" 
-                  class="solr.UpdateRequestHandler" 
+                  class="solr.JsonUpdateRequestHandler" 
                   startup="lazy" />
 
   <!-- Solr Cell Update Request Handler
@@ -1005,7 +1044,7 @@
          the PingRequestHandler.
          relative paths are resolved against the data dir 
     -->
-    <str name="healthcheckFile">server-enabled.txt</str>
+    <!-- <str name="healthcheckFile">server-enabled.txt</str> -->
   </requestHandler>
 
   <!-- Echo the request contents back to the client -->
@@ -1450,14 +1489,6 @@
        <processor class="solr.RunUpdateProcessorFactory" />
      </updateRequestProcessorChain>
     -->
-
-  <updateRequestProcessorChain name="remove-copied-fields">
-    <processor class="solr.IgnoreFieldUpdateProcessorFactory">
-        <str name="fieldName">_version_</str>
-    </processor>
-    <processor class="solr.LogUpdateProcessorFactory"/>
-    <processor class="solr.RunUpdateProcessorFactory"/>
-  </updateRequestProcessorChain>
  
   <!-- Response Writers
 
@@ -1560,12 +1591,5 @@
     </searchComponent>
     </xi:fallback>
   </xi:include>
-
-<requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
-<lst name="defaults">
-  <str name="config">copydev.xml</str>
-  <str name="update.chain">remove-copied-fields</str>
-</lst>
-</requestHandler>
 
 </config>

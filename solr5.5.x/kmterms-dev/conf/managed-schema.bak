@@ -381,8 +381,9 @@
   </fieldType>
   <fieldType name="text_th" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
-      <tokenizer class="solr.ThaiTokenizerFactory"/>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.ThaiWordFilterFactory"/>
       <filter class="solr.StopFilterFactory" words="lang/stopwords_th.txt" ignoreCase="true"/>
     </analyzer>
   </fieldType>

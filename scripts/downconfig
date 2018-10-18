@@ -11,7 +11,7 @@ if [ "$ME" != "downconfig" -a "$ME" != "upconfig" ]; then
 fi
 
 # echo "ME: $ME" 1>&2
-SCRIPTDIR=`dirname $ME`
+SCRIPTDIR=`dirname $0`
 # echo "SCRIPTDIR: $SCRIPTDIR" 1>&2
 
 source $SCRIPTDIR/zk-settings.inc
