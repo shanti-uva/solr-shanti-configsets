@@ -468,7 +468,7 @@
         then documents 0 through 49 will be collected and cached.  Any further
         requests in that range can be satisfied via the cache.  
      -->
-   <queryResultWindowSize>20</queryResultWindowSize>
+   <queryResultWindowSize>300</queryResultWindowSize>
 
    <!-- Maximum number of documents to cache for any entry in the
         queryResultCache. 
@@ -505,7 +505,7 @@
     <listener event="firstSearcher" class="solr.QuerySenderListener">
       <arr name="queries">
         <lst>
-          <str name="q">solr rocks</str><str name="start">0</str><str name="rows">10</str>
+          <str name="q">uid:*</str><str name="start">0</str><str name="rows">10</str>
         </lst>
       </arr>
     </listener>

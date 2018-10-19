@@ -52,6 +52,7 @@
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
+   <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
    <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
@@ -174,6 +175,15 @@
    <!--dynamicField name="*" type="ignored" multiValued="true" /-->
    
    <dynamicField name="url_*" type="text_general"   indexed="true"  stored="true" multiValued="false"/>
+
+
+  <!-- tibetan searching -->
+  <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
+
+  <!-- default typed field for latin scripts -->
+  <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
+
+
 
  <!-- Field to use to determine and enforce document uniqueness. 
       Unless this field is marked with required="false", it will be a required field
@@ -1032,6 +1042,18 @@
       <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+
+  <fieldType name="text_autocomplete" class="solr.TextField">
+    <analyzer type="index">
+      <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[\s-)(,;་།]+" replacement=" "/>
+      <tokenizer class="solr.PathHierarchyTokenizerFactory" reverse="true" delimiter=" "/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.EdgeNGramFilterFactory" maxGramSize="25" minGramSize="1"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
 
