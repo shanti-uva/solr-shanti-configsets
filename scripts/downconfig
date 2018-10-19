@@ -1,0 +1,51 @@
+#!/bin/sh
+USAGE="Usage: `basename $0` [prod|dev] <configname>"
+ME=`basename $0`
+SERVER=$1
+CONFNAME=$2
+CONFDIR=/Users/ys2n/Code/solr-shanti-configsets/solr6.4.x
+
+if [ "$ME" != "downconfig" -a "$ME" != "upconfig" ]; then 
+   echo "COMMAND $ME UNKNOWN.  Must by downconfig or upconfig"
+   exit 2
+fi
+
+# echo "ME: $ME" 1>&2
+SCRIPTDIR=`dirname $0`
+# echo "SCRIPTDIR: $SCRIPTDIR" 1>&2
+
+source $SCRIPTDIR/zk-settings.inc
+
+if [ "$SERVER" = "prod" ]; then
+   ZKHOSTS=$ZKHOSTS_PROD
+elif [ "$SERVER" = "dev" ]; then
+   ZKHOSTS=$ZKHOSTS_DEV
+else
+   echo $USAGE 1>&2;
+   exit 1;
+fi
+
+if [ -z "$CONFNAME" ]; then
+   echo $USAGE 1>&2;
+   exit 1;
+fi
+
+if [ ! -d $CONFDIR/$CONFNAME ]; then
+    echo "ERROR: $CONFDIR/$CONFNAME is not a directory!"
+    exit 1;
+fi
+
+
+EXEC="$ZK -zkhost $ZKHOSTS -cmd $ME -confdir $CONFDIR/$CONFNAME -confname $CONFNAME"
+
+printf "\n$EXEC\n\n"
+printf "ZKHOSTS = $ZKHOSTS\n"
+printf "CONFDIR = $CONFDIR\n"
+printf "CONFNAME = $CONFNAME\n\n"
+
+printf "Execute (y/n)?";
+read yorn
+
+if [ $yorn = "y" -o $yorn = "Y" ]; then
+   exec $EXEC
+fi

@@ -53,7 +53,7 @@
       <str name="dir">${solr.ulog.dir:}</str>
     </updateLog>
     <autoCommit>
-      <maxTime>15000</maxTime>
+      <maxTime>150000</maxTime>
       <openSearcher>false</openSearcher>
     </autoCommit>
   </updateHandler>
@@ -61,17 +61,17 @@
   <query>
     <maxBooleanClauses>1024</maxBooleanClauses>
     <filterCache class="solr.FastLRUCache"
-                 size="512"
-                 initialSize="512"
-                 autowarmCount="0"/>
+                 size="1024"
+                 initialSize="1024"
+                 autowarmCount="1024"/>
     <queryResultCache class="solr.LRUCache"
-                      size="512"
-                      initialSize="512"
-                      autowarmCount="0"/>
+                      size="1024"
+                      initialSize="1024"
+                      autowarmCount="1024"/>
     <documentCache class="solr.LRUCache"
-                   size="512"
-                   initialSize="512"
-                   autowarmCount="0"/>
+                   size="1024"
+                   initialSize="1024"
+                   autowarmCount="1024"/>
     <enableLazyFieldLoading>true</enableLazyFieldLoading>
     <queryResultWindowSize>20</queryResultWindowSize>
     <queryResultMaxDocsCached>200</queryResultMaxDocsCached>

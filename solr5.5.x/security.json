@@ -1,0 +1,45 @@
+{
+  "authentication":{
+    "credentials":{
+      "solr":"BlVc//OgrcI++/3af85C8nSyihzH8M74y6kDCllkA8g= WWtlxARSso4vPkD9uVELJxWG6IVg7AJ4twzDB4gkejw=",
+      "solradmin":"MeyzqAFSn5BYyY8mdejMDpRgY2c9FEd0tXcn1zWbT1Y= VXcUp4l/lV+Y23e0/GNZLEp/ILl2Do9ZIraUBvZ8NGo="},
+    "class":"solr.BasicAuthPlugin",
+    "":{"v":9}},
+  "authorization":{
+    "permissions":[
+      {
+        "role":"writeonly",
+        "path":"/update/*",
+        "name":"ui-restriction-update"},
+      {
+        "role":"admin",
+        "name":"security-read"},
+      {
+        "role":"admin",
+        "name":"security-edit"},
+      {
+        "role":"admin",
+        "name":"collection-admin-edit"},
+      {
+        "role":"admin",
+        "name":"collection-admin-read"},
+      {
+        "role":"admin",
+        "name":"config-read"},
+      {
+        "role":"admin",
+        "name":"config-edit"},
+      {
+        "role":"admin",
+        "name":"schema-read"},
+      {
+        "role":"admin",
+        "name":"schema-edit"}],
+    "class":"solr.RuleBasedAuthorizationPlugin",
+    "user-role":{
+      "solr":"admin",
+      "solradmin":[
+        "readonly",
+        "writeonly",
+        "admin"]},
+    "":{"v":10}}}
