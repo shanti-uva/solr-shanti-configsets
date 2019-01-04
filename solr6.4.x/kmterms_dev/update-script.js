@@ -10,6 +10,7 @@ if (ancy) {
   logger.info("update-script#processAdd: parent = " + parent);
  for(i=0; i < ancestors.length; i++) {
 	logger.info("ancestor[" + i + "] : " + ancestors[i]);
+   return true;
 }
 }
 // Set a field value:
