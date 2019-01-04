@@ -91,7 +91,7 @@
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
       <filter class="solr.ASCIIFoldingFilterFactory"/>
-      <filter class="solr.PatternReplaceFilterFactory" pattern="([^\p{L}\s])" replacement=""/>
+      <filter class="solr.PatternReplaceFilterFactory" pattern="([^\p{L}\p{N}\s])" replacement=""/>
       <filter class="solr.TrimFilterFactory"/>
     </analyzer>
   </fieldType>
