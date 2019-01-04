@@ -1,0 +1,5 @@
+<dataConfig>
+  <document>
+    <entity name="entity" processor="SolrEntityProcessor" url="https://ss558499-us-east-1-aws.measuredsearch.com/solr/av_dev" query="*:*" fl="*" />
+  </document>
+</dataConfig>
