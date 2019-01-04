@@ -52,10 +52,11 @@
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
+   <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
    <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
-   <field name="language" type="text_general" indexed="true" stored="true" multiValued="false"/>
+   <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/>
    <field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -108,6 +109,11 @@
 
    <field name="payloads" type="payloads" indexed="true" stored="true"/>
 
+  <!-- tibetan searching -->
+   <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
+ 
+   <!-- default typed field for latin scripts -->
+   <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
 
    <!--
      Some fields such as popularity and manu_exact could be modified to
@@ -1032,6 +1038,18 @@
       <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
       <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+
+  <fieldType name="text_autocomplete" class="solr.TextField">
+    <analyzer type="index">
+      <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[\s-)(,;་།]+" replacement=" "/>
+      <tokenizer class="solr.PathHierarchyTokenizerFactory" reverse="true" delimiter=" "/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.EdgeNGramFilterFactory" maxGramSize="25" minGramSize="1"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
 

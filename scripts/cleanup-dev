@@ -1,8 +1,8 @@
 #!/bin/sh
 
 cd /Users/ys2n/Code/solr-shanti-configsets/scripts
-AUTH=solradmin:IdskBsk013
-UPDATE=https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmassets_dev/update
-
-curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>uid:pre*</query></delete>"
-curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>uid:stage*</query></delete>"
+#AUTH=solradmin:IdskBsk013
+#UPDATE=https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmassets_dev/update
+AUTH=solrprod:QiscMU5ho2q
+UPDATE=https://ss395824-us-east-1-aws.measuredsearch.com/solr/kmassets_stage/update
+curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>schema_version_i:4</query></delete>"

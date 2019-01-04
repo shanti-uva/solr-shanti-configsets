@@ -495,7 +495,7 @@
   <field name="has_altitudes" type="boolean"/>
   <field name="has_shapes" type="boolean"/>
   <field name="header" type="text_general" multiValued="false"/>
-  <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true" docValues="true"/>
+  <field name="id" type="string" docValues="true" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="illustration_external_url" type="text_general"/>
   <field name="illustration_mms_url" type="text_general"/>
   <field name="index" type="tlongs"/>
@@ -507,6 +507,7 @@
   <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
   <field name="per_page" type="tlongs"/>
   <field name="related_kmaps_node_type" type="text_general"/>
+  <field name="related_places_feature_type_ids" type="text_general"/>
   <field name="related_subject_ids" type="text_general"/>
   <field name="related_subjects_ids" type="text_general"/>
   <field name="remaining_pages" type="tlongs"/>
@@ -518,11 +519,11 @@
   <field name="total_entries" type="tlongs"/>
   <field name="total_pages" type="tlongs"/>
   <field name="tree" type="text_general" multiValued="false"/>
-  <field name="uid" type="string" multiValued="false" indexed="true" required="true" stored="true" docValues="true"/>
+  <field name="uid" type="string" docValues="true" multiValued="false" indexed="true" required="true" stored="true"/>
   <field name="updated_at" type="tdate"/>
   <field name="version" type="tlongs"/>
-  <dynamicField name="ancestor_ids_*" type="tlongs" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="ancestor_uids_*" type="string" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="ancestor_ids_*" type="tlongs" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
   <dynamicField name="ancestors_*" type="string" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="ignored_*" type="ignored" multiValued="true"/>

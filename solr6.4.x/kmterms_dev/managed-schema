@@ -572,6 +572,8 @@
   <copyField source="ancestor_id_path" dest="ancestor_id_lpath"/>
   <copyField source="*_latin" dest="name"/>
   <copyField source="header" dest="header_ssort"/>
+  <copyField source="related_places_header_s" dest="related_places_header_ssort"/>
+  <copyField source="related_subjects_header_s" dest="related_subjects_header_ssort"/>
   <copyField source="associated_subjects_autocomplete" dest="associated_subjects_xfacet"/>
   <copyField source="feature_types_autocomplete" dest="feature_types_xfacet"/>
 </schema>
