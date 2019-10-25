@@ -201,7 +201,7 @@
 
        For more details see http://wiki.apache.org/solr/SolrJmx
     -->
-  <jmx />
+  <!-- <jmx /> -->
   <!-- If you want to connect to a particular server, specify the
        agentId 
     -->
@@ -374,7 +374,7 @@
                and old cache.  
       -->
     <filterCache class="solr.FastLRUCache"
-                 size="2048"
+                 size="512"
                  initialSize="512"
                  autowarmCount="0"/>
 
@@ -384,9 +384,9 @@
          (DocList) based on a query, a sort, and the range of documents requested.  
       -->
     <queryResultCache class="solr.LRUCache"
-                     size="2048"
+                     size="512"
                      initialSize="512"
-                     autowarmCount="1024"/>
+                     autowarmCount="32"/>
    
     <!-- Document Cache
 
@@ -395,9 +395,9 @@
          this cache will not be autowarmed.  
       -->
     <documentCache class="solr.LRUCache"
-                   size="4096"
+                   size="512"
                    initialSize="512"
-                   autowarmCount="1024"/>
+                   autowarmCount="0"/>
     
     <!-- Field Value Cache
          
@@ -468,7 +468,7 @@
         then documents 0 through 49 will be collected and cached.  Any further
         requests in that range can be satisfied via the cache.  
      -->
-   <queryResultWindowSize>300</queryResultWindowSize>
+   <queryResultWindowSize>20</queryResultWindowSize>
 
    <!-- Maximum number of documents to cache for any entry in the
         queryResultCache. 
@@ -505,7 +505,7 @@
     <listener event="firstSearcher" class="solr.QuerySenderListener">
       <arr name="queries">
         <lst>
-          <str name="q">uid:*</str><str name="start">0</str><str name="rows">10</str>
+          <str name="q">solr rocks</str><str name="start">0</str><str name="rows">10</str>
         </lst>
       </arr>
     </listener>
@@ -1005,7 +1005,7 @@
          the PingRequestHandler.
          relative paths are resolved against the data dir 
     -->
-    <str name="healthcheckFile">server-enabled.txt</str>
+    <!-- <str name="healthcheckFile">server-enabled.txt</str> -->
   </requestHandler>
 
   <!-- Echo the request contents back to the client -->

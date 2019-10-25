@@ -52,15 +52,14 @@
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
-   <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
-   <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+   <field name="title" type="text_general" indexed="true" stored="true" multiValued="true"/>
    <field name="subject" type="text_general" indexed="true" stored="true"/>
    <field name="description" type="text_general" indexed="true" stored="true"/>
-   <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="language" type="text_general" indexed="true" stored="true" multiValued="false"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/>
-   <field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
-   <field name="keywords" type="string" indexed="true" stored="true"/>
+   <field name="creator" type="text_general" indexed="true" stored="true" multiValued="true"/>
+   <field name="keywords" type="text_general" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
    <field name="url" type="text_general" indexed="true" stored="true"/>
@@ -77,7 +76,7 @@
    <field name="node_created" type="date" indexed="true" stored="true" multiValued="false"/>
    <field name="node_changed" type="date" indexed="true" stored="true" multiValued="false"/>
  
-   <field name="collection_title" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="collection_title" type="text_general" indexed="true" stored="true" multiValued="false"/>
    <field name="collection_nid" type="string" indexed="true" stored="true" multiValued="false"/>
  
    <field name="service" type="string" indexed="true" stored="true"/>
@@ -90,7 +89,7 @@
    <field name="summary" type="text_general" indexed="true" stored="true" />
    <field name="timestamp" type="date" indexed="true" stored="true" required="true" default="NOW" multiValued="false"/>
 
-   <field name="names_txt" type="text_kw" indexed="true" stored="true" multiValued="true" />
+
    <field name="content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
    <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
@@ -109,11 +108,6 @@
 
    <field name="payloads" type="payloads" indexed="true" stored="true"/>
 
-  <!-- tibetan searching -->
-   <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
- 
-   <!-- default typed field for latin scripts -->
-   <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
 
    <!--
      Some fields such as popularity and manu_exact could be modified to
@@ -344,7 +338,6 @@
 	 also applies synonyms. -->
     <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
-        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
         <!-- in this example, we will only use synonyms at query time
@@ -353,9 +346,7 @@
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
       <analyzer type="query">
-        <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
         <tokenizer class="solr.StandardTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
         <filter class="solr.LowerCaseFilterFactory"/>
@@ -1032,25 +1023,5 @@
        <str name="paramkey">param value</str>
      </similarity>
     -->
-
-  <fieldType name="text_kw" class="solr.TextField" positionIncrementGap="100">
-    <analyzer>
-      <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-    </analyzer>
-  </fieldType>
-
-  <fieldType name="text_autocomplete" class="solr.TextField">
-    <analyzer type="index">
-      <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="[\s-)(,;་།]+" replacement=" "/>
-      <tokenizer class="solr.PathHierarchyTokenizerFactory" reverse="true" delimiter=" "/>
-      <filter class="solr.LowerCaseFilterFactory"/>
-      <filter class="solr.EdgeNGramFilterFactory" maxGramSize="25" minGramSize="1"/>
-    </analyzer>
-    <analyzer type="query">
-      <tokenizer class="solr.KeywordTokenizerFactory"/>
-    </analyzer>
-  </fieldType>
 
 </schema>
