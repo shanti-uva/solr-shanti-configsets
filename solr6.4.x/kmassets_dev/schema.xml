@@ -80,6 +80,7 @@
    <field name="collection_title" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="collection_nid" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="collection_uid_s" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+   <field name="collection_uid_path_ss" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
  
    <field name="service" type="string" indexed="true" stored="true"/>
    <field name="asset_type" type="string" indexed="true" stored="true" multiValued="false" />
