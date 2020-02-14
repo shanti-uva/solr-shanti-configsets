@@ -1,180 +1,114 @@
-drupal7
--------
-The Apache Solr Search module 1.7-dev included a Solr 5.x configuration folder, which was not 
-preserved in the next stable release (1.8). These configuration files are linked from 
-https://www.drupal.org/node/2453855#comment-9738451. I made some minor changes to these files
-so that they would work with Solr 5.5.x.
+# Mandala Solr Configs
 
-### Standalone Solr
+This repository contains the current solr configs that are uploaded to the SearchStax (formerly MeasuredSearch) solr installation.
 
-To run Solr in standalone mode, creating a new core that uses this configuration, enter the
-following commands:
+It also contain a few utility scripts to assist in maintaining the configs
 
-```
-bin/solr start
-bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr
-```
+## Features
 
-This creates a new core called 'av' in the server/solr directory, which copies the drupal7
-configuration. Next, change your Solr Server URL within Drupal to http://localhost:8983/solr/av,
-mark your content for reindexing, and finally index it.
+* Solr Configs
+* Utility scripts
 
-To delete the core and stop Solr, do:
+## Dependencies
 
-```
-bin/solr delete -c av
-bin/solr stop -p 8983
-```
+* Zookeeper
+* Solr
+* Git
 
-If you haven't deleted the core, then you can restart Solr and your core will continue to be
-available.
+## Installation
 
-### SolrCloud with Embedded ZooKeeper
+## Configuration
 
-To run Solr in SolrCloud mode with embedded ZooKeeper and default settings, and then create a
-new collection that uses this configuration, add the -c flag to your start command. In addition,
-it is necessary when starting Solr in SolrCloud mode to pass a Java parameter specifying the 
-location of the Solr contrib directory. Otherwise the International Components for Unicode JARs
-will not be loaded. 
+## Troubleshooting
+
+If you are having issues, please let us know....
+
+## FAQ
+
+### I need to update the solr schema for the predev index to match the dev index. How do I do that?
+
+#### 1. make sure you have the most current configs and utility scripts checked out from github:
 
 ```
-bin/solr start -c -Dsolr.contrib.dir=/path/to/solr/contrib
-bin/solr create -c av -d /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr
+> git clone https://github.com/shanti-uva/solr-shanti-configsets
+```
+And subquently,
+```
+> cd solr-shanti-configsets
+> git pull
 ```
 
-This will create a single shard single replica SolrCloud collection called 'av'. To see this,
-point your browser to http://localhost:8983/solr/#/~cloud.
-
-As before, you can now change your Solr Server URL within Drupal to http://localhost:8983/solr/av,
-mark your content for reindexing, and finally index it.
-
-Again, to delete the collection and stop Solr, do:
-
+#### 2. Use the `downconfig` script to download the current configs from SearchStax, reconciling any differences via git.  NB: if things are properly up-to-date there shouldn't be any differences.
 ```
-bin/solr delete -c av
-bin/solr stop -p 8983
+> ./scripts/downconfig dev kmassets_dev
 ```
 
-Again, if you haven't deleted the collection, then you can restart Solr and it will continue to be
-available.
-
-### SolrCloud with External ZooKeeper
-
-The following instructions are modelled after https://support.lucidworks.com/hc/en-us/articles/206568297.
-
-Download and unzip Apache ZooKeeper. Go into its conf directory and find the file zoo_sample.cfg.
-Change the dataDir setting to an existing directory where ZooKeeper data will be stored. Rename
-the file zoo.cfg.
- 
-Now navigate to the bin directory and start the ZooKeeper server:
+##### 2a. Use the usual git commands to reconcile differences.
 
 ```
-./zkServer.sh start
+> git status
+> git diff
+...etc...
+```
+Note: the usage message for `downconfig`:
+```
+> scripts/downconfig
+Usage: downconfig [prod|dev] <configname>
 ```
 
-Go back to the root directory of Solr and launch SolrCloud using the example script. The -z parameter
-links Solr to the ZooKeeper server, and the -D parameter ensures that the contrib directory with needed
-JARs will be found.
+`[prod|dev]` refers to whether you are contacting the prod or dev instance.
+`<configname>` refers to the subdirectory (and zookeeper `configname`) of the solr configs.  The actual configs are stored in this directory: `solr6.4.x`. This matches the current version of solr that we are using.   I'll update the script with the current active version as we upgrade.
+
+#### 3. Do the same for the other config (e.g. kmassets_predev)
 
 ```
-bin/solr -e cloud -noprompt -z localhost:2181 -Dsolr.contrib.dir=/path/to/solr/contrib
+> cd solr-shanti-configsets
+> ./scripts/downconfig dev kmassets_predev
+> git status
+> git diff
+...
 ```
 
-This creates two Solr nodes, example/cloud/node1/solr and example/cloud/node2/solr. It also creates a
-sample collection called "gettingstarted" which uses the "gettingstarted" config. You'll see this if 
-you point your browser to http://localhost:8983/solr/#/~cloud?view=tree.
+#### 4. Copy the configs from kmassets_dev to kmassets_predev as necessary.
 
-Next, upload the drupal7 configuration to ZooKeeper. We'll call it "av":
-
+One way using unix command to compare the configs is to use `diff`:
 ```
-./server/scripts/cloud-scripts/zkcli.sh -zkhost localhost:2181 -cmd upconfig -confname av -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr/conf
+cd solr6.4.x
+diff -r ./kmassets_dev ./kmassets_predev
 ```
 
-This is also the command that you can use to replace the av config in ZooKeeper if you change it locally.
-(In that case, you have to reload the collection using the Solr collections API.)
+Copy, edit the files as necessary.
 
-Next, create a collection from this config, using 2 shards and 2 replicas per document:
-
-```
-bin/solr create -c av -n av -shards 2 -replicationFactor 2
-```
-
-Go back and check http://localhost:8983/solr/#/~cloud. Your SolrCloud graph should now show
-the av collection with two shards and two replicas.
-
-To delete the collection and stop Solr, do:
+#### 5. Upload the configs to the SearchStax server
 
 ```
-bin/solr delete -c av
-bin/solr stop -all
+> cd solr-shanti-configsets
+> ./scripts/upconfig dev kmassets_predev 
 ```
 
-If you want to stop ZooKeeper, do the following from its bin directory:
+#### 6. Use the solr admin interface to reload the kmassets_predev instance
+
+``` insert screenshots etc here```
+
+#### 7. Check the everything is working
+...
+#### 8. Check-in and push your changes to github
 
 ```
-./zkServer.sh stop
+> cd solr-shanti-configsets
+> git status
+> git add ...
+> git commit -m 'blah blah blah`
+> git push
 ```
 
-You might want to delete a collection without deleting its config:
+#### 9. Open refreshing beverage
 
-```
-bin/solr delete -c gettingstarted -deleteConfig false
-```
+NB: must be refreshing.
 
-You might want to remove a config that doesn't have a collection:
+### Additional Notes
 
-```
-./server/scripts/cloud-scripts/zkcli.sh -cmd clear -z "localhost:2181" /configs/av
-```
+There should be additional notes here, but I'm tired...
 
-To restart the Solr nodes, make sure ZooKeeper is running and then do:
-
-```
-bin/solr start -c -s example/cloud/node1/solr -p 8983 -z localhost:2181
-bin/solr start -c -s example/cloud/node2/solr -p 7574 -z localhost:2181
-```
-
-You'll then pick up where you left off.
-
-### SolrCloud with a ZooKeeper Ensemble
-
-The above example involves a single instance of ZooKeeper controlling all nodes. In production you
-would rather that ZooKeeper is running on each node, with a minimum of three nodes. If one node
-goes down, then the other two are still a quorum and so can keep running. Here's a nice write-up 
-on how to set up a ZooKeeper Ensemble:
-
-[Setting Up SolrCloud in Solr 5.x](http://simplyitinc.blogspot.com/2015/06/setting-up-solrcloud-in-solr-5x.html)
-
-### SolrCloud with MeasuredSearch.com
-
-Start by cloning the [SearchStax Client](https://github.com/measuredsearch/searchstax-client).
-To upload a config or to replace an existing config, navigate to the solr-5/scripts directory
-and then do:
-
-```
-./zkcli.sh -zkhost ZKE -cmd upconfig -confdir /path/to/solr-shanti-configsets/solr5.5.x/drupal7_apachesolr/conf -confname drupal7_apachesolr
-```
-
-Where ZKE is the address of your ZooKeeper Ensemble, which you'll find on your Measured Search
-server page. To create a collection from this config, use curl and the Solr Collections API:
-
-```
-curl 'SLB/admin/collections?action=CREATE&name=av&collection.configName=drupal7_apachesolr&numShards=1'
-```
-
-Where SLB is the address of your Solr Load Balancer. This command only creates one shard. 
-To create more shards, try `numShards=3`. (In which case, if you are experimenting
-on a single node then you'll also need to add `maxShardsPerNode=3`.)
-
-To delete a collection, do:
-
-```
-curl 'SLB/admin/collections?action=DELETE&name=av'
-```
-
-To delete a config that has no collections, do:
-
-```
-./zkcli.sh -zkhost ZKE -cmd clear /configs/drupal7_apachesolr
-```
-
+## Maintainer
+Yuji Shinozaki <ys2n@virginia.edu> 
