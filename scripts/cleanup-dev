@@ -3,5 +3,17 @@
 cd ~/Code/solr-shanti-configsets/scripts
 AUTH=solradmin:IdskBsk013
 UPDATE=https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmassets_dev/update
+SELECT=https://ss251856-us-east-1-aws.measuredsearch.com/solr/kmassets_dev/select
+# AUTH=solrprod:QiscMU5ho2q
+# UPDATE=https://ss395824-us-east-1-aws.measuredsearch.com/solr/kmassets/update
+# SELECT=https://ss395824-us-east-1-aws.measuredsearch.com/solr/kmassets/select
 
-curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>schema_version_i:(8 7 6 5 4 3 2 1)</query></delete>"
+curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>service:(images dev audio-video_dd mandala_dev)</query></delete>"
+curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>schema_version_i:(13 12 11 10 9 8 7 6 5 4 3 2 1)</query></delete>"
+# curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>service:sources_dd\:8443</query></delete>"
+# curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>service:texts_dd</query></delete>"
+# curl -u $AUTH ${UPDATE}/?commit=true -H "Content-Type: text/xml" -d "<delete><query>asset_type:terms</query></delete>"
+# curl -u $AUTH "${SELECT}?indent=true&q=*:*&rows=0&facet=on&facet.field=service" 
+# curl -u $AUTH "${SELECT}?indent=true&q=*:*&rows=0&facet=on&facet.field=asset_type" 
+curl -u $AUTH "${SELECT}?indent=true&q=*:*&rows=0&facet=on&facet.field=schema_version_i" 
+curl -u $AUTH "${SELECT}?indent=true&q=*:*&rows=0&facet=on&facet.field=service" 

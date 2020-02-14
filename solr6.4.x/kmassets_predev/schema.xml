@@ -48,7 +48,7 @@
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <field name="_root_" type="string" indexed="true" stored="false"/>
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
-   <field name="uid" type="string" indexed="true" stored="true" required="true"/>
+   <field name="uid" type="string" indexed="true" stored="true" docValues="true" required="true"/>
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
@@ -79,6 +79,8 @@
  
    <field name="collection_title" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="collection_nid" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="collection_uid_s" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+   <field name="collection_uid_path_ss" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
  
    <field name="service" type="string" indexed="true" stored="true"/>
    <field name="asset_type" type="string" indexed="true" stored="true" multiValued="false" />
@@ -114,6 +116,18 @@
  
    <!-- default typed field for latin scripts -->
    <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
+
+
+
+  <!-- idfacet fields -->
+  <fieldType name="idfacet" class="solr.TextField">
+    <analyzer type="index">
+	  <tokenizer class="solr.KeywordTokenizerFactory" />
+    </analyzer>
+    <analyzer type="query">
+	  <tokenizer class="solr.KeywordTokenizerFactory" />
+    </analyzer>
+  </fieldType>
 
    <!--
      Some fields such as popularity and manu_exact could be modified to
@@ -180,6 +194,10 @@
    <!--dynamicField name="*" type="ignored" multiValued="true" /-->
    
    <dynamicField name="url_*" type="text_general"   indexed="true"  stored="true" multiValued="false"/>
+
+
+   <!-- idfacet field type -->
+   <dynamicField name="*_idfacet" type="idfacet" multiValued="true" indexed="true" stored="true"/>
 
  <!-- Field to use to determine and enforce document uniqueness. 
       Unless this field is marked with required="false", it will be a required field

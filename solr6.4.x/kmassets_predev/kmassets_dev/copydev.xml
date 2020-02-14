@@ -1,5 +1,0 @@
-<dataConfig>
-  <document>
-    <entity name="all" processor="SolrEntityProcessor" url="https://ss558499-us-east-1-aws.measuredsearch.com/solr/kmassets_dev" query="*:*" fl="*" />
-  </document>
-</dataConfig>
