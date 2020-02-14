@@ -1,5 +1,0 @@
-<dataConfig>
-  <document>
-    <entity name="all" processor="SolrEntityProcessor" url="http://kidx.shanti.virginia.edu/solr/kmindex" query="*:*" fl="*" />
-  </document>
-</dataConfig>
