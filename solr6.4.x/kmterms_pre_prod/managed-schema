@@ -480,9 +480,11 @@
   <field name="block_child_type" type="string"/>
   <field name="block_type" type="string"/>
   <field name="bloop" type="text_general"/>
+  <field name="caption_ara" type="text_general"/>
   <field name="caption_bod" type="text_general"/>
   <field name="caption_dzo" type="text_general"/>
   <field name="caption_eng" type="text_general"/>
+  <field name="caption_spa" type="text_general"/>
   <field name="caption_zho" type="text_general"/>
   <field name="checksum" type="text_general"/>
   <field name="closest_fid_with_shapes" type="tlong"/>

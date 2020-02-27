@@ -49,6 +49,7 @@
    <field name="_root_" type="string" indexed="true" stored="false"/>
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
    <field name="uid" type="string" indexed="true" stored="true" docValues="true" required="true"/>
+   <field name="parent_uid" type="string" indexed="true" stored="true" docValues="true"/>
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>

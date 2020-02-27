@@ -629,11 +629,13 @@
   </admin>
 
 <!-- dataimport handler ys2n  -->
+<!--
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
   <str name="config">copydev.xml</str>
   <str name="update.chain">add-unknown-fields-to-the-schema</str>
 </lst>
 </requestHandler>
+-->
 
 </config>

@@ -201,7 +201,7 @@
 
        For more details see http://wiki.apache.org/solr/SolrJmx
     -->
-  <jmx />
+  <!-- <jmx /> -->
   <!-- If you want to connect to a particular server, specify the
        agentId 
     -->
@@ -1561,11 +1561,12 @@
     </xi:fallback>
   </xi:include>
 
+<!--
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
   <str name="config">copydev.xml</str>
   <str name="update.chain">remove-copied-fields</str>
 </lst>
 </requestHandler>
-
+-->
 </config>

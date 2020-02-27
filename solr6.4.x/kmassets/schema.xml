@@ -48,7 +48,8 @@
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <field name="_root_" type="string" indexed="true" stored="false"/>
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
-   <field name="uid" type="string" indexed="true" stored="true" required="true"/>
+   <field name="uid" type="string" indexed="true" stored="true" docValues="true" required="true"/>
+   <field name="parent_uid" type="string" indexed="true" stored="true" docValues="true"/>
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
@@ -79,6 +80,8 @@
  
    <field name="collection_title" type="string" indexed="true" stored="true" multiValued="false"/>
    <field name="collection_nid" type="string" indexed="true" stored="true" multiValued="false"/>
+   <field name="collection_uid_s" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+   <field name="collection_uid_path_ss" type="string" indexed="true" stored="true" multiValued="true" docValues="true"/>
  
    <field name="service" type="string" indexed="true" stored="true"/>
    <field name="asset_type" type="string" indexed="true" stored="true" multiValued="false" />

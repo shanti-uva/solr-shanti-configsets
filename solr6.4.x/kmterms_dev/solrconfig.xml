@@ -614,7 +614,7 @@
   </updateRequestProcessorChain>
 
   <queryResponseWriter name="json" class="solr.JSONResponseWriter">
-    <str name="content-type">text/plain; charset=UTF-8</str>
+    <!-- <str name="content-type">text/plain; charset=UTF-8</str> -->
   </queryResponseWriter>
 
   <queryResponseWriter name="velocity" class="solr.VelocityResponseWriter" startup="lazy"/>
@@ -629,11 +629,12 @@
   </admin>
 
 <!-- dataimport handler ys2n  -->
+<!--
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
   <str name="config">copydev.xml</str>
   <str name="update.chain">add-unknown-fields-to-the-schema</str>
 </lst>
 </requestHandler>
-
+-->
 </config>

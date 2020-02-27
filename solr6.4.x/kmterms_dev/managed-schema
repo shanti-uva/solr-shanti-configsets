@@ -480,6 +480,7 @@
   <field name="block_child_type" type="string"/>
   <field name="block_type" type="string"/>
   <field name="bloop" type="text_general"/>
+  <field name="caption_ara" type="text_general"/>
   <field name="caption_bod" type="text_general"/>
   <field name="caption_dzo" type="text_general"/>
   <field name="caption_eng" type="text_general"/>
@@ -511,9 +512,11 @@
   <field name="related_subject_ids" type="text_general"/>
   <field name="related_subjects_ids" type="text_general"/>
   <field name="remaining_pages" type="tlongs"/>
+  <field name="summary_ara" type="text_general"/>
   <field name="summary_bod" type="text_general"/>
   <field name="summary_dzo" type="text_general"/>
   <field name="summary_eng" type="text_general"/>
+  <field name="summary_mya" type="text_general"/>
   <field name="summary_zho" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="total_entries" type="tlongs"/>

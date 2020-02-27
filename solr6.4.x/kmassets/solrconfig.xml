@@ -374,7 +374,7 @@
                and old cache.  
       -->
     <filterCache class="solr.FastLRUCache"
-                 size="512"
+                 size="2048"
                  initialSize="512"
                  autowarmCount="0"/>
 
@@ -384,9 +384,9 @@
          (DocList) based on a query, a sort, and the range of documents requested.  
       -->
     <queryResultCache class="solr.LRUCache"
-                     size="512"
+                     size="2048"
                      initialSize="512"
-                     autowarmCount="32"/>
+                     autowarmCount="1024"/>
    
     <!-- Document Cache
 
@@ -395,9 +395,9 @@
          this cache will not be autowarmed.  
       -->
     <documentCache class="solr.LRUCache"
-                   size="512"
+                   size="4096"
                    initialSize="512"
-                   autowarmCount="0"/>
+                   autowarmCount="1024"/>
     
     <!-- Field Value Cache
          
@@ -468,7 +468,7 @@
         then documents 0 through 49 will be collected and cached.  Any further
         requests in that range can be satisfied via the cache.  
      -->
-   <queryResultWindowSize>20</queryResultWindowSize>
+   <queryResultWindowSize>300</queryResultWindowSize>
 
    <!-- Maximum number of documents to cache for any entry in the
         queryResultCache. 
@@ -505,7 +505,7 @@
     <listener event="firstSearcher" class="solr.QuerySenderListener">
       <arr name="queries">
         <lst>
-          <str name="q">solr rocks</str><str name="start">0</str><str name="rows">10</str>
+          <str name="q">uid:*</str><str name="start">0</str><str name="rows">10</str>
         </lst>
       </arr>
     </listener>
@@ -1005,7 +1005,7 @@
          the PingRequestHandler.
          relative paths are resolved against the data dir 
     -->
-    <!-- <str name="healthcheckFile">server-enabled.txt</str> -->
+    <str name="healthcheckFile">server-enabled.txt</str>
   </requestHandler>
 
   <!-- Echo the request contents back to the client -->
@@ -1490,7 +1490,7 @@
       plain text so that they are easy to read in *any* browser.
       If you expect a MIME type of "application/json" just remove this override.
      -->
-    <str name="content-type">text/plain; charset=UTF-8</str>
+    <!-- <str name="content-type">text/plain; charset=UTF-8</str> -->
   </queryResponseWriter>
   
   <!--
@@ -1561,11 +1561,12 @@
     </xi:fallback>
   </xi:include>
 
+<!--
 <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
 <lst name="defaults">
   <str name="config">copydev.xml</str>
   <str name="update.chain">remove-copied-fields</str>
 </lst>
 </requestHandler>
-
+-->
 </config>
