@@ -45,6 +45,7 @@
   <fieldType name="int" class="solr.TrieIntField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
   <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="degrees"/>
+  <fieldType name="location_rptgeom" class="solr.RptWithGeometrySpatialField" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="kilometers" format="GeoJSON"/>
   <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
@@ -484,6 +485,7 @@
   <field name="caption_bod" type="text_general"/>
   <field name="caption_dzo" type="text_general"/>
   <field name="caption_eng" type="text_general"/>
+  <field name="caption_spa" type="text_general"/>
   <field name="caption_zho" type="text_general"/>
   <field name="checksum" type="text_general"/>
   <field name="closest_fid_with_shapes" type="tlong"/>
@@ -530,6 +532,7 @@
   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
   <dynamicField name="ancestors_*" type="string" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
+  <dynamicField name="*_rptgeom" type="location_rptgeom" indexed="true" stored="true"/>
   <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="random_*" type="random"/>
   <dynamicField name="*_lpath" type="lpath_hierarchy" indexed="true" stored="false"/>
