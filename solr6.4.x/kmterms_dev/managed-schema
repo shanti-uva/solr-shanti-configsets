@@ -535,6 +535,7 @@
   <dynamicField name="*_rptgeom" type="location_rptgeom" indexed="true" stored="true"/>
   <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="random_*" type="random"/>
+  <dynamicField name="*_path_s" type="path_hierarchy" indexed="true" stored="true"/>
   <dynamicField name="*_lpath" type="lpath_hierarchy" indexed="true" stored="false"/>
   <dynamicField name="*_ssort" type="string_sortable" indexed="true" stored="false"/>
   <dynamicField name="*_path" type="path_hierarchy" indexed="true" stored="true"/>
