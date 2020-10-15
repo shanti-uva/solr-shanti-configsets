@@ -30,8 +30,8 @@ And subquently,
 > cd solr-shanti-configsets
 > git pull
 
-NB:  Wherever you clone these two repos, you will need to update the paths in ./zk-settings.inc to point to the appropriate files.
 ```
+NB:  Wherever you clone these two repos, you will need to update the paths in ./zk-settings.inc to point to the appropriate files.
 
 ### 2. copy and configure `./scripts/zk-settings.inc.dist` to the name `./scripts/zk-settings.inc`
 ```
@@ -39,8 +39,8 @@ NB:  Wherever you clone these two repos, you will need to update the paths in ./
 > cp ./zk-settings.inc.dist zk-settings.inc
 > vi zk-settings.inc
 
-NB: Most likely you will only need to edit the path to the zk script (ZK)
 ```
+NB: Most likely you will only need to edit the path to the zk script (ZK)
 > ./scripts/downconfig dev kmassets_dev
 
 #### 3. Use the `downconfig` script to download the current configs from SearchStax, reconciling any differences via git.  NB: if things are properly up-to-date there shouldn't be any differences.
