@@ -199,6 +199,8 @@
 
    <!-- idfacet field type -->
    <dynamicField name="*_idfacet" type="idfacet" multiValued="true" indexed="true" stored="true"/>
+   <dynamicField name="*_rptgeom" type="location_rptgeom" indexed="true" stored="true"/>
+   <dynamicField name="*_grptgeom" type="string" indexed="true" stored="true"/><!-- KLUDGE -->
 
  <!-- Field to use to determine and enforce document uniqueness. 
       Unless this field is marked with required="false", it will be a required field
@@ -1071,5 +1073,7 @@
       <tokenizer class="solr.KeywordTokenizerFactory"/>
     </analyzer>
   </fieldType>
+
+  <fieldType name="location_rptgeom" class="solr.RptWithGeometrySpatialField" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="kilometers" format="GeoJSON"/>
 
 </schema>
