@@ -30,12 +30,15 @@ If you are having issues, please let us know....
 #### 1. make sure you have the most current configs and utility scripts checked out from github:
 
 ```
+> git clone https://github.com/measuredsearch/searchstax-client
 > git clone https://github.com/shanti-uva/solr-shanti-configsets
 ```
 And subquently,
 ```
 > cd solr-shanti-configsets
 > git pull
+
+NB:  Wherever you clone these two repos, you will need to update the paths in ./zk-settings.inc to point to the appropriate files.
 ```
 
 ### 2. copy and configure `./scripts/zk-settings.inc.dist` to the name `./scripts/zk-settings.inc`
