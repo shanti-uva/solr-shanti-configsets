@@ -15,17 +15,9 @@ It also contain a few utility scripts to assist in maintaining the configs
 * Solr
 * Git
 
+NB: Searchstax has IP-based access controls for Zookeeper.  So you can ONLY run these script from hosts on the allowed list!  see app.searchstax.com
+
 ## Installation
-
-## Configuration
-
-## Troubleshooting
-
-If you are having issues, please let us know....
-
-## FAQ
-
-### I need to update the solr schema for the predev index to match the dev index. How do I do that?
 
 #### 1. make sure you have the most current configs and utility scripts checked out from github:
 
