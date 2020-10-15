@@ -40,7 +40,7 @@ NB:  Wherever you clone these two repos, you will need to update the paths in ./
 > vi zk-settings.inc
 
 ```
-NB: Most likely you will only need to edit the path to the zk script (ZK)
+NB: Most likely you will only need to edit the path to the zk script (ZK) and config base directory (CONFDIR)
 > ./scripts/downconfig dev kmassets_dev
 
 #### 3. Use the `downconfig` script to download the current configs from SearchStax, reconciling any differences via git.  NB: if things are properly up-to-date there shouldn't be any differences.
