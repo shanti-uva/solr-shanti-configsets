@@ -15,35 +15,40 @@ It also contain a few utility scripts to assist in maintaining the configs
 * Solr
 * Git
 
+NB: Searchstax has IP-based access controls for Zookeeper.  So you can ONLY run these script from hosts on the allowed list!  see app.searchstax.com
+
 ## Installation
-
-## Configuration
-
-## Troubleshooting
-
-If you are having issues, please let us know....
-
-## FAQ
-
-### I need to update the solr schema for the predev index to match the dev index. How do I do that?
 
 #### 1. make sure you have the most current configs and utility scripts checked out from github:
 
 ```
+> git clone https://github.com/measuredsearch/searchstax-client
 > git clone https://github.com/shanti-uva/solr-shanti-configsets
 ```
 And subquently,
 ```
 > cd solr-shanti-configsets
 > git pull
-```
 
-#### 2. Use the `downconfig` script to download the current configs from SearchStax, reconciling any differences via git.  NB: if things are properly up-to-date there shouldn't be any differences.
+```
+NB:  Wherever you clone these two repos, you will need to update the paths in ./zk-settings.inc to point to the appropriate files.
+
+### 2. copy and configure `./scripts/zk-settings.inc.dist` to the name `./scripts/zk-settings.inc`
+```
+> cd ./scripts
+> cp ./zk-settings.inc.dist zk-settings.inc
+> vi zk-settings.inc
+
+```
+NB: Most likely you will only need to edit the path to the zk script (ZK) and config base directory (CONFDIR)
+> ./scripts/downconfig dev kmassets_dev
+
+#### 3. Use the `downconfig` script to download the current configs from SearchStax, reconciling any differences via git.  NB: if things are properly up-to-date there shouldn't be any differences.
 ```
 > ./scripts/downconfig dev kmassets_dev
 ```
 
-##### 2a. Use the usual git commands to reconcile differences.
+##### 3a. Use the usual git commands to reconcile differences.
 
 ```
 > git status
@@ -59,7 +64,7 @@ Usage: downconfig [prod|dev] <configname>
 `[prod|dev]` refers to whether you are contacting the prod or dev instance.
 `<configname>` refers to the subdirectory (and zookeeper `configname`) of the solr configs.  The actual configs are stored in this directory: `solr6.4.x`. This matches the current version of solr that we are using.   I'll update the script with the current active version as we upgrade.
 
-#### 3. Do the same for the other config (e.g. kmassets_predev)
+#### 4. Do the same for the other config (e.g. kmassets_predev)
 
 ```
 > cd solr-shanti-configsets
@@ -69,7 +74,7 @@ Usage: downconfig [prod|dev] <configname>
 ...
 ```
 
-#### 4. Copy the configs from kmassets_dev to kmassets_predev as necessary.
+#### 5. Copy the configs from kmassets_dev to kmassets_predev as necessary.
 
 One way using unix command to compare the configs is to use `diff`:
 ```
@@ -79,20 +84,20 @@ diff -r ./kmassets_dev ./kmassets_predev
 
 Copy, edit the files as necessary.
 
-#### 5. Upload the configs to the SearchStax server
+#### 6. Upload the configs to the SearchStax server
 
 ```
 > cd solr-shanti-configsets
 > ./scripts/upconfig dev kmassets_predev 
 ```
 
-#### 6. Use the solr admin interface to reload the kmassets_predev instance
+#### 7. Use the solr admin interface to reload the kmassets_predev instance
 
 ``` insert screenshots etc here```
 
-#### 7. Check the everything is working
+#### 8. Check the everything is working
 ...
-#### 8. Check-in and push your changes to github
+#### 9. Check-in and push your changes to github
 
 ```
 > cd solr-shanti-configsets
@@ -102,7 +107,7 @@ Copy, edit the files as necessary.
 > git push
 ```
 
-#### 9. Open refreshing beverage
+#### 10. Open refreshing beverage
 
 NB: must be refreshing.
 

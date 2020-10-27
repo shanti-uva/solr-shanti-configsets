@@ -3,7 +3,7 @@ USAGE="Usage: `basename $0` [prod|dev] <configname>"
 ME=`basename $0`
 SERVER=$1
 CONFNAME=$2
-CONFDIR=~/Code/solr-shanti-configsets/solr6.4.x
+# CONFDIR=~/Code/solr-shanti-configsets/solr6.4.x
 
 if [ "$ME" != "downconfig" -a "$ME" != "upconfig" ]; then 
    echo "COMMAND $ME UNKNOWN.  Must by downconfig or upconfig"
@@ -14,7 +14,7 @@ fi
 SCRIPTDIR=`dirname $0`
 # echo "SCRIPTDIR: $SCRIPTDIR" 1>&2
 
-source $SCRIPTDIR/zk-settings.inc
+source $SCRIPTDIR/zk-settings.inc || echo "There must be a valid copy of zk-settings.inc in the same directory as this script"
 
 if [ "$SERVER" = "prod" ]; then
    ZKHOSTS=$ZKHOSTS_PROD
@@ -27,6 +27,11 @@ fi
 
 if [ -z "$CONFNAME" ]; then
    echo $USAGE 1>&2;
+   exit 1;
+fi
+
+if [ -z "$CONFDIR" -o ! -d "$CONFDIR" ]; then
+   echo "ERROR: CONFDIR is not set or the directory doesn't exist.  Check your zk-settings.inc";
    exit 1;
 fi
 
