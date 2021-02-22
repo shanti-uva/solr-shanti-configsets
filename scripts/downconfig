@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 USAGE="Usage: `basename $0` [prod|dev] <configname>"
 ME=`basename $0`
 SERVER=$1
@@ -12,9 +12,9 @@ fi
 
 # echo "ME: $ME" 1>&2
 SCRIPTDIR=`dirname $0`
-# echo "SCRIPTDIR: $SCRIPTDIR" 1>&2
+#echo "SCRIPTDIR: $SCRIPTDIR" 1>&2
 
-source $SCRIPTDIR/zk-settings.inc || echo "There must be a valid copy of zk-settings.inc in the same directory as this script"
+source "${SCRIPTDIR}/zk-settings.inc" || echo "There must be a valid copy of zk-settings.inc in the same directory as this script"
 
 if [ "$SERVER" = "prod" ]; then
    ZKHOSTS=$ZKHOSTS_PROD
