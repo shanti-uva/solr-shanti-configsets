@@ -112,13 +112,17 @@
 
    <field name="payloads" type="payloads" indexed="true" stored="true"/>
 
+   <!-- timestamps and versions -->
+   <field name="kmaps_timestamp" type="tdate" indexed="true" stored="true" multiValued="false" />
+   <field name="kmaps_version" type="long" indexed="true" stored="true" multiValued="false" />
+
   <!-- tibetan searching -->
    <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
+   <dynamicField name="*_tibt_sort" type="text_kw" multiValued="false" indexed="true" stored="true"/>
  
    <!-- default typed field for latin scripts -->
    <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
-
-
+   <dynamicField name="*_latin_sort" type="string" multiValued="false" indexed="true" stored="true"/>
 
   <!-- idfacet fields -->
   <fieldType name="idfacet" class="solr.TextField">
