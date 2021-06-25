@@ -29,6 +29,7 @@
   <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
   <lib dir="${solr.install.dir:../../../..}/contrib/dataimporthandler/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-.*\.jar" />
+  <lib dir="${solr.install.dir:../../../..}/server/solr-webapp/webapp/WEB-INF/lib/custom-jars/" regex=".*\.jar"/>
   
   <dataDir>${solr.data.dir:}</dataDir>
 

@@ -45,7 +45,7 @@
   <fieldType name="int" class="solr.TrieIntField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
   <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="degrees"/>
-  <fieldType name="location_rptgeom" class="solr.RptWithGeometrySpatialField" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="kilometers" format="GeoJSON"/>
+  <fieldType name="location_rptgeom" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" spatialContextFactory="org.locationtech.spatial4j.context.jts.JtsSpatialContextFactory" distErrPct="0.025" distanceUnits="kilometers" format="GeoJSON"/>
   <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
@@ -495,6 +495,7 @@
   <field name="feature_type_ids" type="tlongs"/>
   <field name="feature_types" type="string" multiValued="true"/>
   <field name="feature_types_autocomplete" type="facet_autocomplete" multiValued="true" indexed="true" stored="false"/>
+  <field name="geometry_grptgeom" type="text_general"/>
   <field name="has_altitudes" type="boolean"/>
   <field name="has_shapes" type="boolean"/>
   <field name="header" type="text_general" multiValued="false"/>
@@ -509,16 +510,19 @@
   <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
   <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
   <field name="per_page" type="tlongs"/>
+  <field name="recording_url" type="text_general"/>
   <field name="related_kmaps_node_type" type="text_general"/>
   <field name="related_places_feature_type_ids" type="text_general"/>
   <field name="related_subject_ids" type="text_general"/>
   <field name="related_subjects_ids" type="text_general"/>
   <field name="remaining_pages" type="tlongs"/>
+  <field name="shapes_centroid_grptgeom" type="text_general"/>
   <field name="summary_ara" type="text_general"/>
   <field name="summary_bod" type="text_general"/>
   <field name="summary_dzo" type="text_general"/>
   <field name="summary_eng" type="text_general"/>
   <field name="summary_mya" type="text_general"/>
+  <field name="summary_spa" type="text_general"/>
   <field name="summary_zho" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="total_entries" type="tlongs"/>

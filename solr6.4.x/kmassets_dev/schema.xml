@@ -120,6 +120,10 @@
    <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
    <dynamicField name="*_tibt_sort" type="text_kw" multiValued="false" indexed="true" stored="true"/>
  
+  <!-- special name encoding entries -->
+   <dynamicField name="name_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
+   <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
+
    <!-- default typed field for latin scripts -->
    <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
    <dynamicField name="*_latin_sort" type="string" multiValued="false" indexed="true" stored="true"/>
