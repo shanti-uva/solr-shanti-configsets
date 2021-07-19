@@ -5,8 +5,8 @@ SERVER=$1
 CONFNAME=$2
 # CONFDIR=~/Code/solr-shanti-configsets/solr6.4.x
 
-if [ "$ME" != "downconfig" -a "$ME" != "upconfig" ]; then 
-   echo "COMMAND $ME UNKNOWN.  Must by downconfig or upconfig"
+if [ "$ME" != "downconfig" -a "$ME" != "upconfig" -a "$ME" != "cmpconfig" ]; then 
+   echo "COMMAND $ME UNKNOWN.  Must by downconfig or upconfig or cmpconfig"
    exit 2
 fi
 
@@ -40,17 +40,28 @@ if [ ! -d $CONFDIR/$CONFNAME ]; then
     exit 1;
 fi
 
+CDIR=$CONFDIR;
 
-EXEC="$ZK -zkhost $ZKHOSTS -cmd $ME -confdir $CONFDIR/$CONFNAME -confname $CONFNAME"
+if [ "$ME" = "cmpconfig" ]; then
+    ME="downconfig";
+    CDIR="/tmp/cmpconfig";
+    mkdir -p $CDIR
+fi
+
+EXEC="$ZK -zkhost $ZKHOSTS -cmd $ME -confdir $CDIR/$CONFNAME -confname $CONFNAME"
 
 printf "\n$EXEC\n\n"
 printf "ZKHOSTS = $ZKHOSTS\n"
 printf "CONFDIR = $CONFDIR\n"
+printf "CDIR = $CDIR\n"
 printf "CONFNAME = $CONFNAME\n\n"
 
 printf "Execute (y/n)?";
 read yorn
 
 if [ $yorn = "y" -o $yorn = "Y" ]; then
-   exec $EXEC
+   $EXEC
+
+   echo "======= DIFF <CURRENT> <LOCAL> ========="
+   diff -r $CDIR/$CONFNAME $CONFDIR/$CONFNAME
 fi
