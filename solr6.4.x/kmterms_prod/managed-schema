@@ -45,6 +45,7 @@
   <fieldType name="int" class="solr.TrieIntField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
   <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" distErrPct="0.025" distanceUnits="degrees"/>
+  <fieldType name="location_rptgeom" class="solr.SpatialRecursivePrefixTreeFieldType" geo="true" maxDistErr="0.000009" spatialContextFactory="org.locationtech.spatial4j.context.jts.JtsSpatialContextFactory" distErrPct="0.025" distanceUnits="kilometers" format="GeoJSON"/>
   <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" precisionStep="0"/>
   <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
@@ -495,7 +496,6 @@
   <field name="feature_types" type="string" multiValued="true"/>
   <field name="feature_types_autocomplete" type="facet_autocomplete" multiValued="true" indexed="true" stored="false"/>
   <field name="geometry_grptgeom" type="text_general"/>
-  <field name="geometry_rptgeom" type="text_general"/>
   <field name="has_altitudes" type="boolean"/>
   <field name="has_shapes" type="boolean"/>
   <field name="header" type="text_general" multiValued="false"/>
@@ -522,6 +522,7 @@
   <field name="summary_dzo" type="text_general"/>
   <field name="summary_eng" type="text_general"/>
   <field name="summary_mya" type="text_general"/>
+  <field name="summary_spa" type="text_general"/>
   <field name="summary_zho" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="total_entries" type="tlongs"/>
@@ -535,8 +536,10 @@
   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
   <dynamicField name="ancestors_*" type="string" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
+  <dynamicField name="*_rptgeom" type="location_rptgeom" indexed="true" stored="true"/>
   <dynamicField name="*_xfacet" type="xfacet" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="random_*" type="random"/>
+  <dynamicField name="*_path_s" type="path_hierarchy" indexed="true" stored="true"/>
   <dynamicField name="*_lpath" type="lpath_hierarchy" indexed="true" stored="false"/>
   <dynamicField name="*_ssort" type="string_sortable" indexed="true" stored="false"/>
   <dynamicField name="*_path" type="path_hierarchy" indexed="true" stored="true"/>
