@@ -23,15 +23,6 @@
 <config>
   <luceneMatchVersion>7.3</luceneMatchVersion>
 
-  <lib dir="../lib" />
-  <lib dir="${solr.install.dir}/contrib/analysis-extras/lib" />
-  <lib dir="${solr.install.dir}/contrib/analysis-extras/lucene-libs" />
-  <lib dir="${solr.install.dir}/contrib/extraction/lib" />
-  <!-- <lib dir="/usr/local/projects/deployer/v4git/solr-8.10.1/contrib/clustering/lib/" /> -->
-  <lib dir="${solr.install.dir}/contrib/dataimporthandler/lib" regex=".*\.jar" />
-  <lib dir="/usr/local/projects/deployer/v4git/solr-7.3.0/dist/" regex="solr-dataimporthandler-.*\.jar" />
-<!--   <lib dir="/usr/local/projects/deployer/v4git/solr-7.3.0/server/solr-webapp/webapp/WEB-INF/lib/custom-jars/" regex=".*\.jar"/> -->
-  
   <dataDir>${solr.data.dir:}</dataDir>
 
   <directoryFactory name="DirectoryFactory"
@@ -630,14 +621,19 @@
     <defaultQuery>*:*</defaultQuery>
   </admin>
 
-<!-- dataimport handler ys2n  -->
-<!--
-<requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
-<lst name="defaults">
-  <str name="config">copydev.xml</str>
-  <str name="update.chain">add-unknown-fields-to-the-schema</str>
-</lst>
-</requestHandler>
--->
+  <!-- A request handler for replication support -->
+  <requestHandler name="/replication" class="solr.ReplicationHandler" >
+    <lst name="master">
+      <str name="enable">${enable.master:false}</str>
+      <str name="replicateAfter">commit</str>
+      <str name="replicateAfter">optimize</str>
+      <str name="confFiles">admin-extra.html,autofacet.js,copydev-kidx.xml,copydev.xml,copyprod-kidx.xml,copyprod.xml,createJoinId.js,currency.xml,data-config.xml,dataimport.properties,elevate.xml,lang/contractions_ca.txt,lang/contractions_fr.txt,lang/contractions_ga.txt,lang/contractions_it.txt,lang/hyphenations_ga.txt,lang/stemdict_nl.txt,lang/stoptags_ja.txt,lang/stopwords_ar.txt,lang/stopwords_bg.txt,lang/stopwords_ca.txt,lang/stopwords_cz.txt,lang/stopwords_da.txt,lang/stopwords_de.txt,lang/stopwords_el.txt,lang/stopwords_en.txt,lang/stopwords_es.txt,lang/stopwords_eu.txt,lang/stopwords_fa.txt,lang/stopwords_fi.txt,lang/stopwords_fr.txt,lang/stopwords_ga.txt,lang/stopwords_gl.txt,lang/stopwords_hi.txt,lang/stopwords_hu.txt,lang/stopwords_hy.txt,lang/stopwords_id.txt,lang/stopwords_it.txt,lang/stopwords_ja.txt,lang/stopwords_lv.txt,lang/stopwords_nl.txt,lang/stopwords_no.txt,lang/stopwords_pt.txt,lang/stopwords_ro.txt,lang/stopwords_ru.txt,lang/stopwords_sv.txt,lang/stopwords_th.txt,lang/stopwords_tr.txt,lang/userdict_ja.txt,mapping-ISOLatin1Accent.txt,mapping-Tibetan.txt,protwords.txt,solrconfig.xml,stopwords.txt,synonyms.txt,update-script.js,schema.xml</str>
+    </lst>
+    <lst name="slave">
+      <str name="enable">${enable.slave:false}</str>
+      <str name="masterUrl">${master.url:none}/${solr.core.name}/replication</str>
+      <str name="pollInterval">00:00:30</str>
+    </lst>
+  </requestHandler>
 
 </config>
