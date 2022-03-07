@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export JAVA_HOME=/lib_content23/java_1.8.0/jdk1.8.0/
+/lib_content23/solr73_virgo4/solr-7.3.0/bin/solr stop -p 8986 -m 8G -d /lib_content23/solr73_virgo4/solr-7.3.0/server -s /lib_content23/solr73_virgo4/solr-shanti-configsets/solr7.3.x/staging 
+/lib_content23/solr73_virgo4/solr-7.3.0/bin/solr start -p 8986 -m 16G -d /lib_content23/solr73_virgo4/solr-7.3.0/server -s /lib_content23/solr73_virgo4/solr-shanti-configsets/solr7.3.x/staging 
