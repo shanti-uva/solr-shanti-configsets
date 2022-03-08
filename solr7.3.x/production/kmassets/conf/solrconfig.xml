@@ -1559,13 +1559,6 @@
     </xi:fallback>
   </xi:include>
 
-  <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
-    <lst name="defaults">
-      <str name="config">copydev.xml</str>
-      <str name="update.chain">remove-copied-fields</str>
-    </lst>
-  </requestHandler>
-
   <!-- A request handler for replication support -->
   <requestHandler name="/replication" class="solr.ReplicationHandler" >
     <lst name="master">
