@@ -225,20 +225,20 @@
                    since a document was added before automaticly
                    triggering a new commit.
       -->
-    <autoCommit>
-      <maxDocs>${solr.autoCommit.MaxDocs:10000}</maxDocs>
-      <maxTime>${solr.autoCommit.MaxTime:120000}</maxTime>
-    </autoCommit>
+     <autoCommit>
+       <maxTime>${solr.autoCommit.maxTime:60000}</maxTime>
+       <openSearcher>false</openSearcher>
+     </autoCommit>
 
     <!-- softAutoCommit is like autoCommit except it causes a
          'soft' commit which only ensures that changes are visible
          but does not ensure that data is synced to disk.  This is
          faster and more near-realtime friendly than a hard commit.
     -->
-    <autoSoftCommit>
+    <!-- <autoSoftCommit>
       <maxDocs>${solr.autoSoftCommit.MaxDocs:2000}</maxDocs>
       <maxTime>${solr.autoSoftCommit.MaxTime:10000}</maxTime>
-    </autoSoftCommit>
+    </autoSoftCommit>  -->
 
     <!-- Update Related Event Listeners
 
