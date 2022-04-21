@@ -47,64 +47,7 @@
        that you fully re-index after changing this setting as it can
        affect both how text is indexed and queried.
     -->
-  <luceneMatchVersion>${solr.luceneMatchVersion:LUCENE_60}</luceneMatchVersion>
-
-  <!-- <lib/> directives can be used to instruct Solr to load any Jars
-       identified and use them to resolve any "plugins" specified in
-       your solrconfig.xml or schema.xml (ie: Analyzers, Request
-       Handlers, etc...).
-
-       All directories and paths are resolved relative to the
-       instanceDir.
-
-       Please note that <lib/> directives are processed in the order
-       that they appear in your solrconfig.xml file, and are "stacked"
-       on top of each other when building a ClassLoader - so if you have
-       plugin jars with dependencies on other jars, the "lower level"
-       dependency jars should be loaded first.
-
-       If a "./lib" directory exists in your instanceDir, all files
-       found in it are included as if you had used the following
-       syntax...
-
-              <lib dir="./lib" />
-    -->
-
-  <!-- A "dir" option by itself adds any files found in the directory to the
-       classpath, this is useful for including all jars in a directory.
-    -->
-  <lib dir="${solr.contrib.dir:../../../contrib}/extraction/lib" />
-  <lib dir="${solr.contrib.dir:../../../contrib}/clustering/lib/" />
-
-  <!-- The velocity library has been known to crash Solr in some
-       instances when deployed as a war file to Tomcat. Therefore all
-       references have been removed from the default configuration.
-       @see http://drupal.org/node/1612556
-  -->
-  <!-- <lib dir="../../contrib/velocity/lib" /> -->
-
-  <!-- When a regex is specified in addition to a directory, only the
-       files in that directory which completely match the regex
-       (anchored on both ends) will be included.
-    -->
-  <!--<lib dir="../../dist/" regex="apache-solr-cell-\d.*\.jar" />-->
-  <!--<lib dir="../../dist/" regex="apache-solr-clustering-\d.*\.jar" />-->
-  <!--<lib dir="../../dist/" regex="apache-solr-dataimporthandler-\d.*\.jar" />-->
-  <!--<lib dir="../../dist/" regex="apache-solr-langid-\d.*\.jar" />-->
-  <!-- <lib dir="../../dist/" regex="apache-solr-velocity-\d.*\.jar" /> -->
-
-  <!-- If a dir option (with or without a regex) is used and nothing
-       is found that matches, it will be ignored
-    -->
-  <!--<lib dir="../../contrib/clustering/lib/" />-->
-  <!--<lib dir="/total/crap/dir/ignored" />-->
-
-  <!-- an exact path can be used to specify a specific file.  This
-       will cause a serious error to be logged if it can't be loaded.
-    -->
-  <!--
-  <lib path="../a-jar-that-does-not-exist.jar" />
-  -->
+  <luceneMatchVersion>7.3</luceneMatchVersion>
 
   <!-- Data Directory
 
@@ -144,26 +87,6 @@
   -->
   <codecFactory class="solr.SchemaCodecFactory"/>
 
-  <!-- To enable dynamic schema REST APIs, use the following for <schemaFactory>:
-
-       <schemaFactory class="ManagedIndexSchemaFactory">
-         <bool name="mutable">true</bool>
-         <str name="managedSchemaResourceName">managed-schema</str>
-       </schemaFactory>
-
-       When ManagedIndexSchemaFactory is specified, Solr will load the schema from
-       the resource named in 'managedSchemaResourceName', rather than from schema.xml.
-       Note that the managed schema resource CANNOT be named schema.xml.  If the managed
-       schema does not exist, Solr will create it after reading schema.xml, then rename
-       'schema.xml' to 'schema.xml.bak'.
-
-       Do NOT hand edit the managed schema - external modifications will be ignored and
-       overwritten as a result of schema modification REST API calls.
-
-       When ManagedIndexSchemaFactory is specified with mutable = true, schema
-       modification REST API calls will be allowed; otherwise, error responses will be
-       sent back for these requests.
-  -->
   <schemaFactory class="ClassicIndexSchemaFactory"/>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -313,24 +236,6 @@
      <infoStream>true</infoStream>
 
   </indexConfig>
-
-  <!-- JMX
-
-       This example enables JMX if and only if an existing MBeanServer
-       is found, use this if you want to configure JMX through JVM
-       parameters. Remove this to disable exposing Solr configuration
-       and statistics to JMX.
-
-       For more details see http://wiki.apache.org/solr/SolrJmx
-    -->
-  <!-- <jmx /> -->
-  <!-- If you want to connect to a particular server, specify the
-       agentId
-    -->
-  <!-- <jmx agentId="myAgent" /> -->
-  <!-- If you want to start a new MBeanServer, specify the serviceUrl -->
-  <!-- <jmx serviceUrl="service:jmx:rmi:///jndi/rmi://localhost:9999/solr"/>
-    -->
 
   <!-- The default high-performance update handler -->
   <updateHandler class="solr.DirectUpdateHandler2">
@@ -1214,17 +1119,18 @@
        this is just a slave and remove  the <lst name="slave"> section
        if this is just a master.
   -->
+  <!-- A request handler for replication support -->
   <requestHandler name="/replication" class="solr.ReplicationHandler" >
     <lst name="master">
-      <str name="enable">${solr.replication.master:false}</str>
+      <str name="enable">${enable.master:false}</str>
       <str name="replicateAfter">commit</str>
-      <str name="replicateAfter">startup</str>
-      <str name="confFiles">${solr.replication.confFiles:schema.xml,mapping-ISOLatin1Accent.txt,protwords.txt,stopwords.txt,synonyms.txt,elevate.xml}</str>
+      <str name="replicateAfter">optimize</str>
+      <str name="confFiles">elevate.xml,protwords.txt,schema_extra_types.xml,solrconfig_extra.xml,solrcore.properties,synonyms.txt,mapping-ISOLatin1Accent.txt,schema_extra_fields.xml,schema.xml,solrconfig.xml,stopwords.txt </str>
     </lst>
     <lst name="slave">
-      <str name="enable">${solr.replication.slave:false}</str>
-      <str name="masterUrl">${solr.replication.masterUrl:http://localhost:8983/solr}/replication</str>
-      <str name="pollInterval">${solr.replication.pollInterval:00:00:60}</str>
+      <str name="enable">${enable.slave:false}</str>
+      <str name="masterUrl">${master.url:none}/${solr.core.name}/replication</str>
+      <str name="pollInterval">00:00:30</str>
     </lst>
   </requestHandler>
 
