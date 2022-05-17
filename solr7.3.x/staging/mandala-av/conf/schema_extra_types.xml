@@ -3,7 +3,6 @@
 <!-- 
    <fieldType name="text_bod" class="solr.TextField">
      <analyzer>
-       <!-- <tokenizer class="solr.UAX29URLEmailTokenizerFactory"/> -->
        <tokenizer class="solr.ICUTokenizerFactory"/>
      </analyzer>
    </fieldType>
