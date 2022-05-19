@@ -215,7 +215,11 @@
    -->
  <uniqueKey>uid</uniqueKey>
 
-
+    <!-- A set of fields that are used in the general "text" search.
+         We may want to expand these in the future (ys2n) -->	
+    <copyField source="caption" dest="text"/>
+    <copyField source="summary" dest="text"/>
+    <copyField source="title" dest="text"/>
 
     <!-- The StrField type is not analyzed, but indexed/stored verbatim.
        It supports doc values but in that case the field needs to be
