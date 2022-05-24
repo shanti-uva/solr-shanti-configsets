@@ -1,4 +1,8 @@
 <fields>
+   <!-- SHANTI Mandala dynamic fields -->
+   <dynamicField name="*_bod" type="text_bod" indexed="true" stored="true" multiValued="false"/>
+
+
 <!--
   Example: Adding German dynamic field types to our Solr Schema.
   If you enable this, make sure you have a folder called lang containing

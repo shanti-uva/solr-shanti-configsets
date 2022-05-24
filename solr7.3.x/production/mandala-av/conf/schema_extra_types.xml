@@ -1,4 +1,10 @@
 <types>
+   <!-- SHANTI Mandala -->
+   <fieldType name="text_bod" class="solr.TextField">
+     <analyzer>
+       <tokenizer class="solr.ICUTokenizerFactory"/>
+     </analyzer>
+   </fieldType>
 <!--
   Example: Adding German language field types to our Solr Schema.
   If you enable this, make sure you have a folder called lang containing
