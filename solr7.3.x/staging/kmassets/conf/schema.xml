@@ -116,9 +116,18 @@
    <field name="kmaps_timestamp" type="tdate" indexed="true" stored="true" multiValued="false" />
    <field name="kmaps_version" type="long" indexed="true" stored="true" multiValued="false" />
 
-  <!-- tibetan searching -->
+  <!-- tibetan searching OLD -->
    <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
    <dynamicField name="*_tibt_sort" type="text_kw" multiValued="false" indexed="true" stored="true"/>
+
+  <!-- tibetan searching NEW -->
+   <dynamicField name="*_bo" type="text_bo" multiValued="true" indexed="true" stored="true"/>
+
+  <!-- sanskrit -->
+   <dynamicField name="*_sa" type="text_hi" multiValued="true" indexed="true" stored="true"/>
+
+  <!-- chinese -->
+   <dynamicField name="*_zh" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
  
   <!-- special name encoding entries -->
    <dynamicField name="name_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
@@ -203,6 +212,7 @@
    <!--dynamicField name="*" type="ignored" multiValued="true" /-->
    
    <dynamicField name="url_*" type="text_general"   indexed="true"  stored="true" multiValued="false"/>
+   <dynamicField name="*_url" type="text_general"   indexed="true"  stored="true" multiValued="false"/>
 
 
    <!-- idfacet field type -->
@@ -653,6 +663,14 @@
    -->
    <!-- <fieldType name="currency" class="solr.CurrencyField" precisionStep="8" defaultCurrency="USD" currencyConfig="currency.xml" /> -->
              
+    <!-- Tibetan (bo) -->
+    <fieldType name="text_bo" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+         <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
+	 <!-- <tokenizer class="io.bdrc.lucene.bo.TibSyllableTokenizerFactory"/> -->
+	 <tokenizer class="solr.ICUTokenizerFactory">
+      </analyzer>
+    </fieldType>
 
 
    <!-- some examples for different languages (generally ordered by ISO code) -->
