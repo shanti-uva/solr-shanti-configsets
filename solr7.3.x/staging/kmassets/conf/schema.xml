@@ -668,7 +668,7 @@
       <analyzer>
          <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
 	 <!-- <tokenizer class="io.bdrc.lucene.bo.TibSyllableTokenizerFactory"/> -->
-	 <tokenizer class="solr.ICUTokenizerFactory">
+	 <tokenizer class="solr.ICUTokenizerFactory" />
       </analyzer>
     </fieldType>
 
