@@ -21,6 +21,8 @@
      this file, see http://wiki.apache.org/solr/SolrConfigXml.
 -->
 <config name="solr-7.3.x-shanti-drupal7">
+  <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" />
+  <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" />
   <!-- In all configuration below, a prefix of "solr." for class names
        is an alias that causes solr to search appropriate packages,
        including org.apache.solr.(search|update|request|core|analysis)
