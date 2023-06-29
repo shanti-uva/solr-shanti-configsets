@@ -59,8 +59,8 @@
    <field name="description" type="text_general" indexed="true" stored="true" multiValued="true"/>
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
-   <field name="author" type="text_general" indexed="true" stored="true"/>
-   <field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="author" type="text_general" indexed="true" stored="true"/> <!-- Not used? -->
+   <field name="creator" type="text_kw" indexed="true" stored="true" multiValued="true"/>
    <field name="keywords" type="string" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
@@ -223,6 +223,7 @@
      <!-- Title Copy Fields -->
      <copyField source="title_*" dest="title"/>
      <copyField source="*_title_s" dest="title"/>
+     <copyField source="caption" dest="title"/>     
      
      <!-- Tibetan Title Copy Fields -->
      <copyField source="title_alt_bo" dest="title_bo"/>
@@ -232,6 +233,7 @@
      <copyField source="title_long_tibt" dest="title_bo"/>
      <copyField source="title_short_bo" dest="title_bo"/>
      <copyField source="title_short_tibt" dest="title_bo"/>
+     <copyField source="caption_bo" dest="title_bo"/>
      
      <!-- Kmap Name Copy Fields -->
      <copyField source="name_*" dest="names_ss"/>
