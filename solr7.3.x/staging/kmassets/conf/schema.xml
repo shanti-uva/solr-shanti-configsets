@@ -226,11 +226,13 @@
     <!-- A set of fields that are used in the general "text" search.
          We may want to expand these in the future (ys2n) -->
      <!-- Title Copy Fields -->
+     <copyField source="title" dest="titles"/>
      <copyField source="title_*" dest="titles"/>
      <copyField source="*_title_s" dest="titles"/>
      <copyField source="caption" dest="titles"/>     
      
      <!-- Tibetan Title Copy Fields -->
+     <copyField source="title_bo" dest="titles_bo"/>
      <copyField source="title_alt_bo" dest="titles_bo"/>
      <copyField source="title_alt_tibt" dest="titles_bo"/>
      <copyField source="title_corpus_bo_t" dest="titles_bo"/>
@@ -241,6 +243,7 @@
      <copyField source="caption_bo" dest="titles_bo"/>
      
      <!-- Kmap Name Copy Fields -->
+     <copyField source="name" dest="names"/>
      <copyField source="name_*" dest="names"/>
      
      <!-- Chinese Name Copy Fields -->
@@ -252,6 +255,7 @@
      <copyField source="name_hant" dest="names_zh"/>
      
      <!-- Creator Copy Fields -->
+     <copyField source="creator" dest="creators"/>
      <copyField source="creator_*" dest="creators"/>
      <copyField source="contributor_*" dest="creators"/>
      <copyField source="agent_*" dest="creators"/>
@@ -268,6 +272,7 @@
      <!-- Description Copy Fields  -->
      <copyField source="caption" dest="descriptions"/>
      <copyField source="summary" dest="descriptions"/>
+     <copyField source="description" dest="descriptions"/>
      <copyField source="caption_*" dest="descriptions"/>
      <copyField source="summary_*" dest="description"/>
         <!-- Description Copy Fields for other languages -->
