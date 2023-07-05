@@ -47,20 +47,25 @@
 
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <field name="_root_" type="string" indexed="true" stored="false"/>
-   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
+     <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
+     <field name="ids" type="string" indexed="true" stored="true" required="true" multiValued="true" />  <!-- Copy field for gathering all ids -->
    <field name="uid" type="string" indexed="true" stored="true" docValues="true" required="true"/>
    <field name="parent_uid" type="string" indexed="true" stored="true" docValues="true"/>
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
+     <field name="names" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
-   <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="titles" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy field for gathering all creators -->
    <field name="subject" type="text_general" indexed="true" stored="true"/>
-   <field name="description" type="text_general" indexed="true" stored="true" multiValued="true"/>
+     <field name="description" type="text_general" indexed="true" stored="true" multiValued="true"/>
+     <field name="descriptions" type="text_general" indexed="true" stored="true" multiValued="true"/>  <!-- Copy field for gathering all creators -->
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/> <!-- Not used? -->
-   <field name="creator" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="creator" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="creators" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy field for gathering all creators -->
    <field name="keywords" type="string" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
@@ -221,23 +226,24 @@
     <!-- A set of fields that are used in the general "text" search.
          We may want to expand these in the future (ys2n) -->
      <!-- Title Copy Fields -->
-     <copyField source="title_*" dest="title"/>
-     <copyField source="*_title_s" dest="title"/>
-     <copyField source="caption" dest="title"/>     
+     <copyField source="title_*" dest="titles"/>
+     <copyField source="*_title_s" dest="titles"/>
+     <copyField source="caption" dest="titles"/>     
      
      <!-- Tibetan Title Copy Fields -->
-     <copyField source="title_alt_bo" dest="title_bo"/>
-     <copyField source="title_alt_tibt" dest="title_bo"/>
-     <copyField source="title_corpus_bo_t" dest="title_bo"/>
-     <copyField source="title_corpus_tibt" dest="title_bo"/>
-     <copyField source="title_long_tibt" dest="title_bo"/>
-     <copyField source="title_short_bo" dest="title_bo"/>
-     <copyField source="title_short_tibt" dest="title_bo"/>
-     <copyField source="caption_bo" dest="title_bo"/>
+     <copyField source="title_alt_bo" dest="titles_bo"/>
+     <copyField source="title_alt_tibt" dest="titles_bo"/>
+     <copyField source="title_corpus_bo_t" dest="titles_bo"/>
+     <copyField source="title_corpus_tibt" dest="titles_bo"/>
+     <copyField source="title_long_tibt" dest="titles_bo"/>
+     <copyField source="title_short_bo" dest="titles_bo"/>
+     <copyField source="title_short_tibt" dest="titles_bo"/>
+     <copyField source="caption_bo" dest="titles_bo"/>
      
      <!-- Kmap Name Copy Fields -->
-     <copyField source="name_*" dest="names_ss"/>
-         <!-- Chinese Name Copy Fields -->
+     <copyField source="name_*" dest="names"/>
+     
+     <!-- Chinese Name Copy Fields -->
      <copyField source="name_pri.tib.sec.chi" dest="names_zh"/>
      <copyField source="name_simp.chi" dest="names_zh"/>
      <copyField source="name_trad.chi" dest="names_zh"/>
@@ -246,31 +252,31 @@
      <copyField source="name_hant" dest="names_zh"/>
      
      <!-- Creator Copy Fields -->
-     <copyField source="creator_*" dest="creator"/>
-     <copyField source="contributor_*" dest="creator"/>
-     <copyField source="agent_*" dest="creator"/>
-     <copyField source="*_authors_ss" dest="creator"/>
-     <copyField source="*_authors_s" dest="creator"/>
-     <copyField source="node_user_*" dest="creator"/>
+     <copyField source="creator_*" dest="creators"/>
+     <copyField source="contributor_*" dest="creators"/>
+     <copyField source="agent_*" dest="creators"/>
+     <copyField source="*_authors_ss" dest="creators"/>
+     <copyField source="*_authors_s" dest="creators"/>
+     <copyField source="node_user_*" dest="creators"/>
      
      <!-- Alt ID Copy Fields -->
-     <copyField source="uid" dest="ids_ss"/>
-     <copyField source="id" dest="ids_ss"/>
-     <copyField source="*_id_s" dest="ids_ss"/>
-     <copyField source="*_id_ss" dest="ids_ss"/>
+     <copyField source="uid" dest="ids"/>
+     <copyField source="id" dest="ids"/>
+     <copyField source="*_id_s" dest="ids"/>
+     <copyField source="*_id_ss" dest="ids"/>
      
      <!-- Description Copy Fields  -->
-     <copyField source="caption" dest="description"/>
-     <copyField source="summary" dest="description"/>
-     <copyField source="caption_*" dest="description"/>
+     <copyField source="caption" dest="descriptions"/>
+     <copyField source="summary" dest="descriptions"/>
+     <copyField source="caption_*" dest="descriptions"/>
      <copyField source="summary_*" dest="description"/>
         <!-- Description Copy Fields for other languages -->
-     <copyField source="caption_bo" dest="description_bo"/>
-     <copyField source="summary_bo" dest="description_bo"/>
-     <copyField source="caption_zh" dest="description_zh"/>
-     <copyField source="summary_zh" dest="description_zh"/>
-     <copyField source="caption_sa" dest="description_sa"/>
-     <copyField source="summary_sa" dest="description_sa"/>
+     <copyField source="caption_bo" dest="descriptions_bo"/>
+     <copyField source="summary_bo" dest="descriptions_bo"/>
+     <copyField source="caption_zh" dest="descriptions_zh"/>
+     <copyField source="summary_zh" dest="descriptions_zh"/>
+     <copyField source="caption_sa" dest="descriptions_sa"/>
+     <copyField source="summary_sa" dest="descriptions_sa"/>
      
      <!-- Text Copy Fields -->
      <copyField source="*_t" dest="text"/>
