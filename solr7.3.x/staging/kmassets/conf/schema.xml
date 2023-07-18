@@ -278,10 +278,13 @@
         <!-- Description Copy Fields for other languages -->
      <copyField source="caption_bo" dest="descriptions_bo"/>
      <copyField source="summary_bo" dest="descriptions_bo"/>
+     <copyField source="description_bo" dest="descriptions_bo"/>
      <copyField source="caption_zh" dest="descriptions_zh"/>
      <copyField source="summary_zh" dest="descriptions_zh"/>
+     <copyField source="description_zh" dest="descriptions_zh"/>
      <copyField source="caption_sa" dest="descriptions_sa"/>
      <copyField source="summary_sa" dest="descriptions_sa"/>
+     <copyField source="description_sa" dest="descriptions_sa"/>
      
      <!-- Text Copy Fields -->
      <copyField source="*_t" dest="text"/>
