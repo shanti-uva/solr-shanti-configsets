@@ -274,7 +274,7 @@
      <copyField source="summary" dest="descriptions"/>
      <copyField source="description" dest="descriptions"/>
      <copyField source="caption_*" dest="descriptions"/>
-     <copyField source="summary_*" dest="description"/>
+     <copyField source="summary_*" dest="descriptions"/>
         <!-- Description Copy Fields for other languages -->
      <copyField source="caption_bo" dest="descriptions_bo"/>
      <copyField source="summary_bo" dest="descriptions_bo"/>
