@@ -1,0 +1,7 @@
+production/kmterms/data/
+staging/kmterms/data/
+production/kmassets/data/
+staging/kmassets/data/
+utilities/json2solrxml/bin
+utilities/json2solrxml/dist
+
