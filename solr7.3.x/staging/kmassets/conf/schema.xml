@@ -245,6 +245,7 @@
      <!-- Kmap Name Copy Fields -->
      <copyField source="name" dest="names"/>
      <copyField source="name_*" dest="names"/>
+     <copyField source="names_txt" dest="names"/>
      
      <!-- Chinese Name Copy Fields -->
      <copyField source="name_pri.tib.sec.chi" dest="names_zh"/>
