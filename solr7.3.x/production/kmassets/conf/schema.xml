@@ -47,20 +47,25 @@
 
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <field name="_root_" type="string" indexed="true" stored="false"/>
-   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
+     <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
+     <field name="ids" type="string" indexed="true" stored="true" required="true" multiValued="true" />  <!-- Copy field for gathering all ids -->
    <field name="uid" type="string" indexed="true" stored="true" docValues="true" required="true"/>
    <field name="parent_uid" type="string" indexed="true" stored="true" docValues="true"/>
    <field name="etag" type="string" indexed="true" stored="true"/>
         
    <field name="name" type="string" indexed="true" stored="true"/>
+     <field name="names" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
-   <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="titles" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy field for gathering all creators -->
    <field name="subject" type="text_general" indexed="true" stored="true"/>
-   <field name="description" type="text_general" indexed="true" stored="true"/>
+     <field name="description" type="text_general" indexed="true" stored="true" multiValued="true"/>
+     <field name="descriptions" type="text_general" indexed="true" stored="true" multiValued="true"/>  <!-- Copy field for gathering all creators -->
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
-   <field name="author" type="text_general" indexed="true" stored="true"/>
-   <field name="creator" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="author" type="text_general" indexed="true" stored="true"/> <!-- Not used? -->
+     <field name="creator" type="text_kw" indexed="true" stored="true" multiValued="true"/>
+     <field name="creators" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy field for gathering all creators -->
    <field name="keywords" type="string" indexed="true" stored="true"/>
    <field name="category" type="text_general" indexed="true" stored="true"/>
    <field name="resourcename" type="text_general" indexed="true" stored="true"/>
@@ -115,38 +120,7 @@
    <!-- timestamps and versions -->
    <field name="kmaps_timestamp" type="tdate" indexed="true" stored="true" multiValued="false" />
    <field name="kmaps_version" type="long" indexed="true" stored="true" multiValued="false" />
-
-  <!-- tibetan searching OLD -->
-   <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
-   <dynamicField name="*_tibt_sort" type="text_kw" multiValued="false" indexed="true" stored="true"/>
-
-  <!-- tibetan searching NEW -->
-   <dynamicField name="*_bo" type="text_bo" multiValued="true" indexed="true" stored="true"/>
-
-  <!-- sanskrit -->
-   <dynamicField name="*_sa" type="text_hi" multiValued="true" indexed="true" stored="true"/>
-
-  <!-- chinese -->
-   <dynamicField name="*_zh" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
- 
-  <!-- special name encoding entries -->
-   <dynamicField name="name_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
-   <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
-
-   <!-- default typed field for latin scripts -->
-   <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
-   <dynamicField name="*_latin_sort" type="string" multiValued="false" indexed="true" stored="true"/>
-
-  <!-- idfacet fields -->
-  <fieldType name="idfacet" class="solr.TextField">
-    <analyzer type="index">
-	  <tokenizer class="solr.KeywordTokenizerFactory" />
-    </analyzer>
-    <analyzer type="query">
-	  <tokenizer class="solr.KeywordTokenizerFactory" />
-    </analyzer>
-  </fieldType>
-
+     
    <!--
      Some fields such as popularity and manu_exact could be modified to
      leverage doc values:
@@ -161,13 +135,36 @@
      would also make the index faster to load, more memory-efficient and more
      NRT-friendly.
      -->
-
+     
+     <!-- **** Dynamic Fields **** -->
+     
    <!-- Dynamic field definitions allow using convention over configuration
        for fields via the specification of patterns to match field names. 
        EXAMPLE:  name="*_i" will match any field ending in _i (like myid_i, z_i)
        RESTRICTION: the glob-like pattern in the name attribute must have
        a "*" only at the start or the end.  -->
-   
+     <!-- tibetan searching OLD -->
+     <dynamicField name="*_tibt" type="text_kw" multiValued="true" indexed="true" stored="true"/>
+     <dynamicField name="*_tibt_sort" type="text_kw" multiValued="false" indexed="true" stored="true"/>
+     
+     <!-- tibetan searching NEW -->
+     <dynamicField name="*_bo" type="text_bo" multiValued="true" indexed="true" stored="true"/>
+     
+     <!-- sanskrit -->
+     <dynamicField name="*_sa" type="text_hi" multiValued="true" indexed="true" stored="true"/>
+     
+     <!-- chinese -->
+     <dynamicField name="*_zh" type="text_cjk" multiValued="true" indexed="true" stored="true"/>
+     
+     <!-- special name encoding entries -->
+     <dynamicField name="name_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
+     <field name="name_zh" type="text_cjk" multiValued="true" stored="true"/>
+     
+     <!-- default typed field for latin scripts -->
+     <dynamicField name="*_latin" type="string" multiValued="true" indexed="true" stored="true"/>
+     <dynamicField name="*_latin_sort" type="string" multiValued="false" indexed="true" stored="true"/>
+     
+     <!-- SOLR default dynamic fields -->
    <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
    <dynamicField name="*_is" type="int"    indexed="true"  stored="true"  multiValued="true"/>
    <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" />
@@ -218,19 +215,105 @@
    <!-- idfacet field type -->
    <dynamicField name="*_idfacet" type="idfacet" multiValued="true" indexed="true" stored="true"/>
    <dynamicField name="*_rptgeom" type="location_rptgeom" indexed="true" stored="true"/>
-   <dynamicField name="*_grptgeom" type="string" indexed="true" stored="true"/><!-- KLUDGE -->
+   <dynamicField name="*_grptgeom" type="string" indexed="true" stored="true"/><!-- Geom Kludge -->
 
  <!-- Field to use to determine and enforce document uniqueness. 
       Unless this field is marked with required="false", it will be a required field
    -->
  <uniqueKey>uid</uniqueKey>
-
+     
+    <!-- **** Copy Fields **** -->
     <!-- A set of fields that are used in the general "text" search.
-         We may want to expand these in the future (ys2n) -->	
-    <copyField source="caption" dest="text"/>
-    <copyField source="summary" dest="text"/>
-    <copyField source="title" dest="text"/>
-
+         We may want to expand these in the future (ys2n) -->
+     <!-- Title Copy Fields -->
+     <copyField source="title" dest="titles"/>
+     <copyField source="title_*" dest="titles"/>
+     <copyField source="*_title_s" dest="titles"/>
+     <copyField source="caption" dest="titles"/>     
+     
+     <!-- Tibetan Title Copy Fields -->
+     <copyField source="title_bo" dest="titles_bo"/>
+     <copyField source="title_alt_bo" dest="titles_bo"/>
+     <copyField source="title_alt_tibt" dest="titles_bo"/>
+     <copyField source="title_corpus_bo_t" dest="titles_bo"/>
+     <copyField source="title_corpus_tibt" dest="titles_bo"/>
+     <copyField source="title_long_tibt" dest="titles_bo"/>
+     <copyField source="title_short_bo" dest="titles_bo"/>
+     <copyField source="title_short_tibt" dest="titles_bo"/>
+     <copyField source="caption_bo" dest="titles_bo"/>
+     
+     <!-- Kmap Name Copy Fields -->
+     <copyField source="name" dest="names"/>
+     <copyField source="name_*" dest="names"/>
+     <copyField source="names_txt" dest="names"/>
+     
+     <!-- Chinese Name Copy Fields -->
+     <copyField source="name_pri.tib.sec.chi" dest="names_zh"/>
+     <copyField source="name_simp.chi" dest="names_zh"/>
+     <copyField source="name_trad.chi" dest="names_zh"/>
+     <copyField source="name_zh" dest="names_zh"/>
+     <copyField source="name_hans" dest="names_zh"/>
+     <copyField source="name_hant" dest="names_zh"/>
+     
+     <!-- Creator Copy Fields -->
+     <copyField source="creator" dest="creators"/>
+     <copyField source="creator_*" dest="creators"/>
+     <copyField source="contributor_*" dest="creators"/>
+     <copyField source="agent_*" dest="creators"/>
+     <copyField source="*_authors_ss" dest="creators"/>
+     <copyField source="*_authors_s" dest="creators"/>
+     <copyField source="node_user_*" dest="creators"/>
+     
+     <!-- Alt ID Copy Fields -->
+     <copyField source="uid" dest="ids"/>
+     <copyField source="id" dest="ids"/>
+     <copyField source="*_id_s" dest="ids"/>
+     <copyField source="*_id_ss" dest="ids"/>
+     
+     <!-- Description Copy Fields  -->
+     <copyField source="caption" dest="descriptions"/>
+     <copyField source="summary" dest="descriptions"/>
+     <copyField source="description" dest="descriptions"/>
+     <copyField source="caption_*" dest="descriptions"/>
+     <copyField source="summary_*" dest="descriptions"/>
+        <!-- Description Copy Fields for other languages -->
+     <copyField source="caption_bo" dest="descriptions_bo"/>
+     <copyField source="summary_bo" dest="descriptions_bo"/>
+     <copyField source="description_bo" dest="descriptions_bo"/>
+     <copyField source="caption_zh" dest="descriptions_zh"/>
+     <copyField source="summary_zh" dest="descriptions_zh"/>
+     <copyField source="description_zh" dest="descriptions_zh"/>
+     <copyField source="caption_sa" dest="descriptions_sa"/>
+     <copyField source="summary_sa" dest="descriptions_sa"/>
+     <copyField source="description_sa" dest="descriptions_sa"/>
+     
+     <!-- Text Copy Fields -->
+     <copyField source="*_t" dest="text"/>
+     <copyField source="*_txt" dest="text"/>
+     <copyField source="*_s" dest="text"/>
+     <copyField source="*_ss" dest="text"/>
+     <copyField source="*_bo" dest="text"/>
+     <copyField source="*_zh" dest="text"/>
+     <copyField source="*_sa" dest="text"/>
+     <copyField source="name_*" dest="text"/>
+     <copyField source="agent_*" dest="text"/>
+     <copyField source="caption" dest="text"/>
+     <copyField source="summary" dest="text"/>
+     <copyField source="title" dest="text"/>
+     <copyField source="description" dest="text"/>
+     <copyField source="creator" dest="text"/>
+     
+     <!-- **** Field Types **** -->
+     <!-- idfacet fields -->
+     <fieldType name="idfacet" class="solr.TextField">
+          <analyzer type="index">
+               <tokenizer class="solr.KeywordTokenizerFactory" />
+          </analyzer>
+          <analyzer type="query">
+               <tokenizer class="solr.KeywordTokenizerFactory" />
+          </analyzer>
+     </fieldType>
+     
     <!-- The StrField type is not analyzed, but indexed/stored verbatim.
        It supports doc values but in that case the field needs to be
        single-valued and either required or have a default value.
@@ -565,14 +648,14 @@
       </analyzer>
     </fieldType>
     
-    <fieldtype name="phonetic" stored="false" indexed="true" class="solr.TextField" >
+    <fieldType name="phonetic" stored="false" indexed="true" class="solr.TextField" >
       <analyzer>
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.DoubleMetaphoneFilterFactory" inject="false"/>
       </analyzer>
-    </fieldtype>
+    </fieldType>
 
-    <fieldtype name="payloads" stored="false" indexed="true" class="solr.TextField" >
+    <fieldType name="payloads" stored="false" indexed="true" class="solr.TextField" >
       <analyzer>
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
         <!--
@@ -588,7 +671,7 @@
          -->
         <filter class="solr.DelimitedPayloadTokenFilterFactory" encoder="float"/>
       </analyzer>
-    </fieldtype>
+    </fieldType>
 
     <!-- lowercases the entire field value, keeping it as a single token.  -->
     <fieldType name="lowercase" class="solr.TextField" positionIncrementGap="100">
