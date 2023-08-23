@@ -476,6 +476,7 @@
         <!-- in this example, we will only use synonyms at query time
         <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
         -->
+        <filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
       <analyzer type="query">
@@ -1171,6 +1172,7 @@
     <analyzer>
       <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
   </fieldType>
