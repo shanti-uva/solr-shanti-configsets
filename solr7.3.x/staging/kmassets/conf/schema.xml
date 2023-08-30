@@ -101,6 +101,7 @@
    <field name="names_txt" type="text_kw" indexed="true" stored="true" multiValued="true" />
    <field name="content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
+   <field name="str" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy Field for all string (text_kw) fields -->
    <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
    <field name="duration" type="int" indexed="true" stored="true" multiValued="false"/>
    <field name="duration_s" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -269,6 +270,41 @@
      <copyField source="id" dest="ids"/>
      <copyField source="*_id_s" dest="ids"/>
      <copyField source="*_id_ss" dest="ids"/>
+     
+     <!-- All Strings Copy Fields -->
+     <copyField source="title" dest="str"/>
+     <copyField source="title_*" dest="str"/>
+     <copyField source="*_title_s" dest="str"/>
+     <copyField source="title_bo" dest="str"/>
+     <copyField source="title_alt_bo" dest="str"/>
+     <copyField source="title_alt_tibt" dest="str"/>
+     <copyField source="title_corpus_bo_t" dest="str"/>
+     <copyField source="title_corpus_tibt" dest="str"/>
+     <copyField source="title_long_tibt" dest="str"/>
+     <copyField source="title_short_bo" dest="str"/>
+     <copyField source="title_short_tibt" dest="str"/>
+     <copyField source="caption_bo" dest="str"/>
+     <copyField source="caption" dest="str"/> 
+     <copyField source="name" dest="str"/>
+     <copyField source="name_*" dest="str"/>
+     <copyField source="names_txt" dest="str"/>
+     <copyField source="name_pri.tib.sec.chi" dest="str"/>
+     <copyField source="name_simp.chi" dest="str"/>
+     <copyField source="name_trad.chi" dest="str"/>
+     <copyField source="name_zh" dest="str"/>
+     <copyField source="name_hans" dest="str"/>
+     <copyField source="name_hant" dest="str"/>
+     <copyField source="creator" dest="str"/>
+     <copyField source="creator_*" dest="str"/>
+     <copyField source="contributor_*" dest="str"/>
+     <copyField source="agent_*" dest="str"/>
+     <copyField source="*_authors_ss" dest="str"/>
+     <copyField source="*_authors_s" dest="str"/>
+     <copyField source="node_user_*" dest="str"/>
+     <copyField source="uid" dest="str"/>
+     <copyField source="id" dest="str"/>
+     <copyField source="*_id_s" dest="str"/>
+     <copyField source="*_id_ss" dest="str"/>
      
      <!-- Description Copy Fields  -->
      <copyField source="caption" dest="descriptions"/>
