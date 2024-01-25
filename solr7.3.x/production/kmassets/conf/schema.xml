@@ -57,10 +57,10 @@
      <field name="names" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="name_autocomplete" type="text_autocomplete" multiValued="true" stored="true"/>
      <field name="title" type="text_kw" indexed="true" stored="true" multiValued="true"/>
-     <field name="titles" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy field for gathering all creators -->
+     <field name="titles" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy field for gathering all titles -->
    <field name="subject" type="text_general" indexed="true" stored="true"/>
      <field name="description" type="text_general" indexed="true" stored="true" multiValued="true"/>
-     <field name="descriptions" type="text_general" indexed="true" stored="true" multiValued="true"/>  <!-- Copy field for gathering all creators -->
+     <field name="descriptions" type="text_general" indexed="true" stored="true" multiValued="true"/>  <!-- Copy field for gathering all descriptions -->
    <field name="language" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="comments" type="text_general" indexed="true" stored="true"/>
    <field name="author" type="text_general" indexed="true" stored="true"/> <!-- Not used? -->
@@ -101,6 +101,7 @@
    <field name="names_txt" type="text_kw" indexed="true" stored="true" multiValued="true" />
    <field name="content" type="text_general" indexed="false" stored="true" multiValued="true"/>
 
+   <field name="str" type="text_kw" indexed="true" stored="true" multiValued="true"/> <!-- Copy Field for all string (text_kw) fields -->
    <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
    <field name="duration" type="int" indexed="true" stored="true" multiValued="false"/>
    <field name="duration_s" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -269,6 +270,41 @@
      <copyField source="id" dest="ids"/>
      <copyField source="*_id_s" dest="ids"/>
      <copyField source="*_id_ss" dest="ids"/>
+     
+     <!-- All Strings Copy Fields -->
+     <copyField source="title" dest="str"/>
+     <copyField source="title_*" dest="str"/>
+     <copyField source="*_title_s" dest="str"/>
+     <copyField source="title_bo" dest="str"/>
+     <copyField source="title_alt_bo" dest="str"/>
+     <copyField source="title_alt_tibt" dest="str"/>
+     <copyField source="title_corpus_bo_t" dest="str"/>
+     <copyField source="title_corpus_tibt" dest="str"/>
+     <copyField source="title_long_tibt" dest="str"/>
+     <copyField source="title_short_bo" dest="str"/>
+     <copyField source="title_short_tibt" dest="str"/>
+     <copyField source="caption_bo" dest="str"/>
+     <copyField source="caption" dest="str"/> 
+     <copyField source="name" dest="str"/>
+     <copyField source="name_*" dest="str"/>
+     <copyField source="names_txt" dest="str"/>
+     <copyField source="name_pri.tib.sec.chi" dest="str"/>
+     <copyField source="name_simp.chi" dest="str"/>
+     <copyField source="name_trad.chi" dest="str"/>
+     <copyField source="name_zh" dest="str"/>
+     <copyField source="name_hans" dest="str"/>
+     <copyField source="name_hant" dest="str"/>
+     <copyField source="creator" dest="str"/>
+     <copyField source="creator_*" dest="str"/>
+     <copyField source="contributor_*" dest="str"/>
+     <copyField source="agent_*" dest="str"/>
+     <copyField source="*_authors_ss" dest="str"/>
+     <copyField source="*_authors_s" dest="str"/>
+     <copyField source="node_user_*" dest="str"/>
+     <copyField source="uid" dest="str"/>
+     <copyField source="id" dest="str"/>
+     <copyField source="*_id_s" dest="str"/>
+     <copyField source="*_id_ss" dest="str"/>
      
      <!-- Description Copy Fields  -->
      <copyField source="caption" dest="descriptions"/>
@@ -476,7 +512,8 @@
         <!-- in this example, we will only use synonyms at query time
         <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
         -->
-        <filter class="solr.LowerCaseFilterFactory"/>
+           <filter class="solr.LowerCaseFilterFactory"/>
+           <filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
       </analyzer>
       <analyzer type="query">
         <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
@@ -484,7 +521,8 @@
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-        <filter class="solr.LowerCaseFilterFactory"/>
+           <filter class="solr.LowerCaseFilterFactory"/>
+           <filter class="solr.ASCIIFoldingFilterFactory" />
       </analyzer>
     </fieldType>
 
@@ -1171,6 +1209,7 @@
     <analyzer>
       <charFilter class="solr.MappingCharFilterFactory" mapping="mapping-Tibetan.txt"/>
       <tokenizer class="solr.KeywordTokenizerFactory"/>
+      <filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
       <filter class="solr.LowerCaseFilterFactory"/>
     </analyzer>
   </fieldType>
