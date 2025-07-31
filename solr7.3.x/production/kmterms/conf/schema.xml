@@ -328,6 +328,12 @@
       <filter class="solr.HindiStemFilterFactory"/>
     </analyzer>
   </fieldType>
+  <fieldType name="text_deva" class="solr.TextField" positionIncrementGap="100">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.IndicNormalizationFilterFactory"/>
+    </analyzer>
+  </fieldType>
   <fieldType name="text_hu" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -549,6 +555,7 @@
   <dynamicField name="*_hansu" type="text_cjk" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="*_hantu" type="text_cjk" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="*_tibtu" type="text_kw" multiValued="false" indexed="true" stored="true"/>
+  <dynamicField name="*_devau" type="text_deva" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="*_latinu" type="text_general" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="name_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="attr_*" type="text_general" multiValued="true" indexed="true" stored="true"/>
@@ -579,6 +586,7 @@
   <copyField source="id" dest="uid"/>
   <copyField source="*_latin" dest="name_autocomplete"/>
   <copyField source="*_tibt" dest="name_autocomplete"/>
+  <copyField source="*_deva" dest="name_autocomplete"/>
   <copyField source="caption_*" dest="text"/>
   <copyField source="summary_*" dest="text"/>
   <copyField source="*_latin" dest="text"/>
