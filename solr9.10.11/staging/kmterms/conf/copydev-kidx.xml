@@ -1,0 +1,6 @@
+<dataConfig>
+  <document>
+    <entity name="places" processor="SolrEntityProcessor" url="http://kidx.shanti.virginia.edu/solr/termindex-dev" query="tree:places" fl="*" />
+    <entity name="subjects" processor="SolrEntityProcessor" url="http://kidx.shanti.virginia.edu/solr/termindex-dev" query="tree:subjects" fl="*" />
+  </document>
+</dataConfig>

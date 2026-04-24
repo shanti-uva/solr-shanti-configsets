@@ -1,0 +1,8 @@
+<dataConfig>
+  <document>
+    <entity name="sep" processor="SolrEntityProcessor" url="http://kidx.shanti.virginia.edu/solr/termindex-dev" query="*:*" fl="*">
+    	<field column="header_s" name="_old_header_s" />
+    	<field column="_version_" name="_old_version_" />
+    </entity>
+  </document>
+</dataConfig>

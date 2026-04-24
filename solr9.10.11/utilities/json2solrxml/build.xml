@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="Json2SolrXML">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+
+    <target name="init">
+        <mkdir dir="bin"/>
+        <mkdir dir="dist"/>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    
+    <target depends="compile,jar" name="build"/>
+
+    <target depends="init" name="compile">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+        </javac>
+    </target>
+    
+    <target description="build jar" name="jar" depends="compile">
+        <jar destfile="dist/json2solrxml.jar">
+            <manifest>
+                <attribute name="Main-Class" value="JsonToXMLConverter"/>
+                <!-- <attribute name="Version" value="${version}"/> -->
+                <attribute name="Built-Date" value="${TODAY}"/>
+            </manifest>
+            <fileset dir="bin" includes="**/*.class" />
+        </jar>
+        <echo message="jar built" />
+        <property name="jar.already.run" value="true" />
+    </target>
+    
+</project>
