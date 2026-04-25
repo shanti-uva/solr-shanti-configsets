@@ -1055,12 +1055,12 @@
   <!-- <requestHandler name="/admin/" class="solr.admin.AdminHandlers" /> -->
   <!-- This single handler is equivalent to the following... -->
   <!--
-     <requestHandler name="/admin/luke"       class="solr.admin.LukeRequestHandler" />
-     <requestHandler name="/admin/system"     class="solr.admin.SystemInfoHandler" />
-     <requestHandler name="/admin/plugins"    class="solr.admin.PluginInfoHandler" />
-     <requestHandler name="/admin/threads"    class="solr.admin.ThreadDumpHandler" />
+     <requestHandler name="/admin/luke" class="solr.admin.LukeRequestHandler" />
+     <requestHandler name="/admin/system" class="solr.admin.SystemInfoHandler" />
+     <requestHandler name="/admin/plugins" class="solr.admin.PluginInfoHandler" />
+     <requestHandler name="/admin/threads" class="solr.admin.ThreadDumpHandler" />
      <requestHandler name="/admin/properties" class="solr.admin.PropertiesRequestHandler" />
-     <requestHandler name="/admin/file"       class="solr.admin.ShowFileRequestHandler" >
+     <requestHandler name="/admin/file" class="solr.admin.ShowFileRequestHandler" >
     -->
   <!-- If you wish to hide files under ${solr.home}/conf, explicitly
        register the ShowFileRequestHandler using the definition below.
@@ -1154,12 +1154,12 @@
 
        By default, the following components are available:
 
-       <searchComponent name="query"     class="solr.QueryComponent" />
-       <searchComponent name="facet"     class="solr.FacetComponent" />
-       <searchComponent name="mlt"       class="solr.MoreLikeThisComponent" />
+       <searchComponent name="query" class="solr.QueryComponent" />
+       <searchComponent name="facet" class="solr.FacetComponent" />
+       <searchComponent name="mlt" class="solr.MoreLikeThisComponent" />
        <searchComponent name="highlight" class="solr.HighlightComponent" />
-       <searchComponent name="stats"     class="solr.StatsComponent" />
-       <searchComponent name="debug"     class="solr.DebugComponent" />
+       <searchComponent name="stats" class="solr.StatsComponent" />
+       <searchComponent name="debug" class="solr.DebugComponent" />
 
        Default configuration in a requestHandler would look like:
 
@@ -1232,7 +1232,7 @@
        To use this suggester, set the "solr.suggester.enabled=true" system property
     -->
   <searchComponent name="suggest" class="solr.SuggestComponent"
-                   enable="${solr.suggester.enabled:false}"     >
+                   enable="${solr.suggester.enabled:false}" >
     <lst name="suggester">
       <str name="name">mySuggester</str>
       <str name="lookupImpl">FuzzyLookupFactory</str>

@@ -130,7 +130,7 @@
    <field name="includes" type="text_general" indexed="true" stored="true" termVectors="true" termPositions="true" termOffsets="true" />
 
    <field name="weight" type="float" indexed="true" stored="true"/>
-   <field name="price"  type="float" indexed="true" stored="true"/>
+   <field name="price" type="float" indexed="true" stored="true"/>
    <field name="popularity" type="int" indexed="true" stored="true" />
    <field name="inStock" type="boolean" indexed="true" stored="true" />
 
@@ -198,37 +198,37 @@
        RESTRICTION: the glob-like pattern in the name attribute must have
        a "*" only at the start or the end.  -->
    
-   <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
-   <dynamicField name="*_is" type="int"    indexed="true"  stored="true"  multiValued="true"/>
-   <dynamicField name="*_s"  type="string"  indexed="true"  stored="true" />
-   <dynamicField name="*_ss" type="string"  indexed="true"  stored="true" multiValued="true"/>
-   <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
-   <dynamicField name="*_ls" type="long"   indexed="true"  stored="true"  multiValued="true"/>
-   <dynamicField name="*_t"  type="text_general"    indexed="true"  stored="true"/>
-   <dynamicField name="*_txt" type="text_general"   indexed="true"  stored="true" multiValued="true"/>
-   <dynamicField name="*_en"  type="text_en"    indexed="true"  stored="true" multiValued="true"/>
-   <dynamicField name="*_b"  type="boolean" indexed="true" stored="true"/>
-   <dynamicField name="*_bs" type="boolean" indexed="true" stored="true"  multiValued="true"/>
-   <dynamicField name="*_f"  type="float"  indexed="true"  stored="true"/>
-   <dynamicField name="*_fs" type="float"  indexed="true"  stored="true"  multiValued="true"/>
-   <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
-   <dynamicField name="*_ds" type="double" indexed="true"  stored="true"  multiValued="true"/>
+   <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
+   <dynamicField name="*_is" type="int" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_s" type="string" indexed="true" stored="true" />
+   <dynamicField name="*_ss" type="string" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_l" type="long" indexed="true" stored="true"/>
+   <dynamicField name="*_ls" type="long" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_t" type="text_general" indexed="true" stored="true"/>
+   <dynamicField name="*_txt" type="text_general" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_en" type="text_en" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_b" type="boolean" indexed="true" stored="true"/>
+   <dynamicField name="*_bs" type="boolean" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_f" type="float" indexed="true" stored="true"/>
+   <dynamicField name="*_fs" type="float" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_d" type="double" indexed="true" stored="true"/>
+   <dynamicField name="*_ds" type="double" indexed="true" stored="true" multiValued="true"/>
 
    <!-- Type used to index the lat and lon components for the "location" FieldType -->
-   <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false" />
+   <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false" />
 
-   <dynamicField name="*_dt"  type="date"    indexed="true"  stored="true"/>
-   <dynamicField name="*_dts" type="date"    indexed="true"  stored="true" multiValued="true"/>
-   <dynamicField name="*_p"  type="location" indexed="true" stored="true"/>
+   <dynamicField name="*_dt" type="date" indexed="true" stored="true"/>
+   <dynamicField name="*_dts" type="date" indexed="true" stored="true" multiValued="true"/>
+   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
 
    <!-- some trie-coded dynamic fields for faster range queries -->
-   <dynamicField name="*_ti" type="tint"    indexed="true"  stored="true"/>
-   <dynamicField name="*_tl" type="tlong"   indexed="true"  stored="true"/>
-   <dynamicField name="*_tf" type="tfloat"  indexed="true"  stored="true"/>
-   <dynamicField name="*_td" type="tdouble" indexed="true"  stored="true"/>
-   <dynamicField name="*_tdt" type="tdate"  indexed="true"  stored="true"/>
+   <dynamicField name="*_ti" type="tint" indexed="true" stored="true"/>
+   <dynamicField name="*_tl" type="tlong" indexed="true" stored="true"/>
+   <dynamicField name="*_tf" type="tfloat" indexed="true" stored="true"/>
+   <dynamicField name="*_td" type="tdouble" indexed="true" stored="true"/>
+   <dynamicField name="*_tdt" type="tdate" indexed="true" stored="true"/>
 
-   <dynamicField name="*_c"   type="currency" indexed="true"  stored="true"/>
+   <dynamicField name="*_c" type="currency" indexed="true" stored="true"/>
 
    <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
    <dynamicField name="attr_*" type="text_general" indexed="true" stored="true" multiValued="true"/>
@@ -341,10 +341,10 @@
       These fields support doc values, but they require the field to be
       single-valued and either be required or have a default value.
     -->
-    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
-    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
-    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
-    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="int" class="solr.IntPointField" positionIncrementGap="0"/>
+    <fieldType name="float" class="solr.FloatPointField" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.LongPointField" positionIncrementGap="0"/>
+    <fieldType name="double" class="solr.DoublePointField" positionIncrementGap="0"/>
 
     <!--
      Numeric field types that index each value at various levels of precision
@@ -356,10 +356,10 @@
      indexed per value, slightly larger index size, and faster range queries.
      A precisionStep of 0 disables indexing at different precision levels.
     -->
-    <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+    <fieldType name="tint" class="solr.IntPointField" positionIncrementGap="0"/>
+    <fieldType name="tfloat" class="solr.FloatPointField" positionIncrementGap="0"/>
+    <fieldType name="tlong" class="solr.LongPointField" positionIncrementGap="0"/>
+    <fieldType name="tdouble" class="solr.DoublePointField" positionIncrementGap="0"/>
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
          is a more restricted form of the canonical representation of dateTime
@@ -383,10 +383,10 @@
 
          Note: For faster range queries, consider the tdate type
       -->
-    <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="date" class="solr.DatePointField" positionIncrementGap="0"/>
 
     <!-- A Trie based date field for faster date range queries and date faceting. -->
-    <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+    <fieldType name="tdate" class="solr.DatePointField" positionIncrementGap="0"/>
 
 
     <!--Binary data type. The data should be sent/retrieved in as Base64 encoded Strings -->
@@ -654,7 +654,7 @@
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
         <!--
         The DelimitedPayloadTokenFilter can put payloads on tokens... for example,
-        a token of "foo|1.4"  would be indexed as "foo" with a payload of 1.4f
+        a token of "foo|1.4" would be indexed as "foo" with a payload of 1.4f
         Attributes of the DelimitedPayloadTokenFilterFactory : 
          "delimiter" - a one character delimiter. Default is | (pipe)
 	 "encoder" - how to encode the following value into a playload
