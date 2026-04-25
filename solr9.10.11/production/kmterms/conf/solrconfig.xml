@@ -601,7 +601,7 @@
     </processor>
 
    <!-- associated subject autocomplete faceting -->
-   <processor class="solr.StatelessScriptUpdateProcessorFactory">
+   <processor class="org.apache.solr.scripting.update.ScriptUpdateProcessorFactory">
      <str name="script">autofacet.js</str>
      <lst name="params">
        <str name="text_field">associated_subjects</str>
@@ -610,7 +610,7 @@
      </lst>
    </processor>
 
-    <processor class="solr.StatelessScriptUpdateProcessorFactory">
+    <processor class="org.apache.solr.scripting.update.ScriptUpdateProcessorFactory">
       <str name="script">autofacet.js</str>
       <lst name="params">
         <str name="text_field">feature_types</str>
