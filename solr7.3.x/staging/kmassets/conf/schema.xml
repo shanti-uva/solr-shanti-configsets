@@ -121,6 +121,9 @@
    <!-- timestamps and versions -->
    <field name="kmaps_timestamp" type="tdate" indexed="true" stored="true" multiValued="false" />
    <field name="kmaps_version" type="long" indexed="true" stored="true" multiValued="false" />
+
+   <!-- transcript id; explicit docValues so the solr-proxy join (mandala-av-transcripts) can use it. Without this, *_i matches the int dynamicField (no docValues). -->
+   <field name="trid_i" type="int" indexed="true" stored="true" multiValued="false" docValues="true"/>
      
    <!--
      Some fields such as popularity and manu_exact could be modified to
